@@ -1,910 +1,1583 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deadline Masters | Elite Corporate Execution</title>
-    
-    <!-- Premium Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Montserrat:wght@400;500;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <style>
-        :root {
-            --navy: #0B192C;
-            --navy-light: #152A4A;
-            --gold: #C59B27;
-            --gold-hover: #D4AF37;
-            --white: #FFFFFF;
-            --light-gray: #F8F9FA;
-            --glass: rgba(255, 255, 255, 0.03);
-            --glass-border: rgba(255, 255, 255, 0.1);
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deadline Masters | Elite Corporate Execution</title>
+<meta name="description" content="Deadline Masters is a multidisciplinary corporate task force covering finance, technology, law, real estate, digital strategy and sales — deployed when time collapses.">
+<meta property="og:title" content="Deadline Masters | Elite Corporate Execution">
+<meta property="og:description" content="A high-stakes, rapid-response corporate task force resolving critical accounting, digital infrastructure and compliance emergencies.">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            scroll-behavior: smooth;
-        }
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@500;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--navy);
-            color: var(--white);
-            overflow-x: hidden;
-        }
+<style>
+/* =========================================================
+   0. DESIGN SYSTEM
+========================================================= */
+:root{
+  --navy:#0B192C;
+  --navy-light:#152A4A;
+  --navy-deep:#060E1A;
+  --gold:#C59B27;
+  --gold-bright:#D4AF37;
+  --white:#FFFFFF;
+  --ink:#94a3b8;
+  --ink-dim:#5f7290;
+  --glass:rgba(255,255,255,.03);
+  --glass-strong:rgba(255,255,255,.06);
+  --glass-border:rgba(255,255,255,.1);
+  --danger:#e35b5b;
+  --success:#3fbf7f;
+  --ease:cubic-bezier(.4,0,.2,1);
+  --transition:all .5s var(--ease);
+  --radius:18px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto;}
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important;}
+}
+body{
+  font-family:'Inter',sans-serif;
+  background:var(--navy);
+  color:var(--white);
+  overflow-x:hidden;
+  min-height:100vh;
+}
+h1,h2,h3,h4,.brand-logo{font-family:'Montserrat',sans-serif;}
+a{color:inherit;}
+img{max-width:100%;display:block;}
+button{font-family:inherit;}
+::selection{background:var(--gold);color:var(--navy);}
 
-        h1, h2, h3, h4, .brand-logo {
-            font-family: 'Montserrat', sans-serif;
-        }
+/* custom scrollbar */
+::-webkit-scrollbar{width:9px;}
+::-webkit-scrollbar-track{background:var(--navy-deep);}
+::-webkit-scrollbar-thumb{background:linear-gradient(var(--gold),#8a6a17);border-radius:10px;}
+* {scrollbar-width:thin; scrollbar-color:var(--gold) var(--navy-deep);}
 
-        /* Ambient Background */
-        .ambient-bg {
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            z-index: -1;
-            overflow: hidden;
-            background: var(--navy);
-        }
-        .orb {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(120px);
-            opacity: 0.25;
-            animation: float 20s infinite ease-in-out alternate;
-        }
-        .orb-1 { width: 500px; height: 500px; background: var(--gold); top: -10%; left: -10%; }
-        .orb-2 { width: 600px; height: 600px; background: #1a365d; bottom: -20%; right: -10%; animation-delay: -5s; }
+.visually-hidden{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;}
 
-        @keyframes float {
-            0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(50px, 80px) scale(1.1); }
-        }
+/* focus states */
+a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,[tabindex]:focus-visible{
+  outline:2px solid var(--gold-bright); outline-offset:3px; border-radius:6px;
+}
 
-        /* Navigation */
-        nav {
-            position: fixed;
-            width: 100%;
-            padding: 1.2rem 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(11, 25, 44, 0.85);
-            backdrop-filter: blur(15px);
-            border-bottom: 1px solid var(--glass-border);
-            z-index: 100;
-        }
-        .brand-logo {
-            font-size: 1.4rem;
-            font-weight: 800;
-            letter-spacing: 1px;
-            color: var(--white);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .brand-logo i { color: var(--gold); }
-        
-        .nav-links {
-            display: flex;
-            gap: 2.5rem;
-            list-style: none;
-        }
-        .nav-links a {
-            color: var(--white);
-            text-decoration: none;
-            font-size: 0.85rem;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: color 0.3s;
-        }
-        .nav-links a:hover { color: var(--gold); }
-        
-        .btn-gold {
-            background: var(--gold);
-            color: var(--navy);
-            padding: 10px 24px;
-            border-radius: 30px;
-            font-weight: 700;
-            text-decoration: none;
-            text-transform: uppercase;
-            font-size: 0.85rem;
-            letter-spacing: 1px;
-            transition: all 0.3s;
-            border: 1px solid var(--gold);
-        }
-        .btn-gold:hover {
-            background: transparent;
-            color: var(--gold);
-            box-shadow: 0 0 20px rgba(197, 155, 39, 0.3);
-        }
+/* =========================================================
+   1. REVEAL ANIMATION SYSTEM
+========================================================= */
+.reveal-up{opacity:0;transform:translateY(50px);transition:var(--transition);}
+.reveal-up.active{opacity:1;transform:translateY(0);}
+.reveal-left{opacity:0;transform:translateX(-50px);transition:var(--transition);}
+.reveal-left.active{opacity:1;transform:translateX(0);}
+.reveal-right{opacity:0;transform:translateX(50px);transition:var(--transition);}
+.reveal-right.active{opacity:1;transform:translateX(0);}
+.reveal-scale{opacity:0;transform:scale(.85);transition:var(--transition);}
+.reveal-scale.active{opacity:1;transform:scale(1);}
 
-        /* Sections General */
-        section {
-            position: relative;
-            z-index: 10;
-            padding: 8rem 5%;
-        }
-        .section-header {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
-        .section-tag {
-            color: var(--gold);
-            font-weight: 700;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            margin-bottom: 1rem;
-            display: block;
-            font-size: 0.85rem;
-        }
-        .section-title {
-            font-size: clamp(2rem, 4vw, 3.5rem);
-            line-height: 1.1;
-            text-transform: uppercase;
-            font-weight: 800;
-        }
+/* =========================================================
+   2. AMBIENT BACKGROUND
+========================================================= */
+.ambient-bg{position:fixed;inset:0;z-index:-2;overflow:hidden;background:var(--navy);}
+.ambient-bg::before{ /* subtle grid */
+  content:'';position:absolute;inset:-2px;
+  background-image:linear-gradient(rgba(197,155,39,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(197,155,39,.05) 1px,transparent 1px);
+  background-size:64px 64px;
+  mask-image:radial-gradient(ellipse 80% 60% at 50% 0%,#000 40%,transparent 80%);
+  animation:gridDrift 40s linear infinite;
+}
+@keyframes gridDrift{0%{background-position:0 0,0 0;}100%{background-position:64px 128px,64px 128px;}}
+.orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.22;animation:float 22s infinite ease-in-out alternate;}
+.orb-1{width:520px;height:520px;background:var(--gold);top:-12%;left:-10%;}
+.orb-2{width:620px;height:620px;background:#1a365d;bottom:-20%;right:-10%;animation-delay:-7s;}
+.orb-3{width:380px;height:380px;background:#3a2c05;top:40%;left:60%;animation-delay:-14s;opacity:.15;}
+@keyframes float{0%{transform:translate(0,0) scale(1);}100%{transform:translate(60px,90px) scale(1.12);}}
+.glow-follow{
+  position:fixed;width:420px;height:420px;border-radius:50%;
+  background:radial-gradient(circle,rgba(197,155,39,.12),transparent 70%);
+  pointer-events:none;z-index:-1;transition:transform .25s ease-out;
+}
+@media (hover:none){.glow-follow{display:none;}}
 
-        /* Hero */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding-top: 10rem;
-        }
-        .hero h1 {
-            font-size: clamp(3rem, 7vw, 5.5rem);
-            line-height: 1.05;
-            margin-bottom: 1.5rem;
-            text-transform: uppercase;
-            font-weight: 900;
-            background: linear-gradient(135deg, #fff, #cbd5e1);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .hero p {
-            color: #94a3b8;
-            max-width: 700px;
-            margin: 0 auto 3rem auto;
-            line-height: 1.6;
-            font-size: 1.2rem;
-        }
+/* =========================================================
+   3. PRELOADER
+========================================================= */
+#preloader{
+  position:fixed;inset:0;z-index:5000;background:var(--navy-deep);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;
+  transition:opacity .6s var(--ease),visibility .6s var(--ease);
+}
+#preloader.hide{opacity:0;visibility:hidden;pointer-events:none;}
+.pre-mark{font-family:'Montserrat',sans-serif;font-weight:900;letter-spacing:4px;font-size:1.1rem;color:var(--white);}
+.pre-mark span{color:var(--gold);}
+.pre-ring{position:relative;width:74px;height:74px;}
+.pre-ring svg{width:100%;height:100%;transform:rotate(-90deg);}
+.pre-ring circle{fill:none;stroke-width:3;}
+.pre-ring .track{stroke:rgba(255,255,255,.08);}
+.pre-ring .bar{stroke:var(--gold);stroke-linecap:round;stroke-dasharray:207;stroke-dashoffset:207;animation:preSpin 1.1s var(--ease) forwards infinite;}
+@keyframes preSpin{0%{stroke-dashoffset:207;}60%{stroke-dashoffset:40;}100%{stroke-dashoffset:207;}}
+.pre-sub{font-size:.72rem;letter-spacing:2px;color:var(--ink);text-transform:uppercase;}
 
-        /* Stats / About */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-        .stat-card {
-            background: var(--glass);
-            border: 1px solid var(--glass-border);
-            padding: 3rem 2rem;
-            border-radius: 16px;
-            text-align: center;
-            backdrop-filter: blur(10px);
-        }
-        .stat-number {
-            font-size: 3.5rem;
-            font-family: 'Montserrat';
-            font-weight: 900;
-            color: var(--gold);
-            margin-bottom: 0.5rem;
-        }
-        .stat-label {
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-size: 0.9rem;
-            color: #cbd5e1;
-            font-weight: 500;
-        }
+/* =========================================================
+   4. NAVIGATION
+========================================================= */
+nav{
+  position:fixed;top:0;left:0;width:100%;padding:1.1rem 5%;
+  display:flex;justify-content:space-between;align-items:center;
+  background:rgba(11,25,44,.55);backdrop-filter:blur(14px);
+  border-bottom:1px solid transparent;z-index:1000;transition:var(--transition);
+}
+nav.scrolled{background:rgba(11,25,44,.92);border-bottom-color:var(--glass-border);box-shadow:0 4px 30px rgba(0,0,0,.35);}
+.brand-logo{font-size:1.3rem;font-weight:800;letter-spacing:.5px;text-decoration:none;display:flex;align-items:center;gap:10px;cursor:pointer;background:none;border:none;color:var(--white);}
+.brand-logo i{color:var(--gold);}
+.nav-links{display:flex;align-items:center;gap:2.2rem;}
+.nav-links a{text-decoration:none;font-size:.85rem;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:var(--ink);transition:var(--transition);cursor:pointer;background:none;border:none;font-family:inherit;}
+.nav-links a:hover{color:var(--gold);}
+.nav-cta{display:none;}
+@media(min-width:900px){.nav-cta{display:inline-flex;}}
 
-        /* Works / Services */
-        .works-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        .work-card {
-            background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
-            border: 1px solid var(--glass-border);
-            padding: 3rem;
-            border-radius: 16px;
-            transition: transform 0.3s;
-        }
-        .work-card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(197, 155, 39, 0.3);
-        }
-        .work-icon {
-            font-size: 2.5rem;
-            color: var(--gold);
-            margin-bottom: 1.5rem;
-        }
-        .work-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-        }
-        .work-card p {
-            color: #94a3b8;
-            line-height: 1.6;
-            margin-bottom: 1.5rem;
-        }
-        .work-achievement {
-            display: inline-block;
-            background: rgba(197, 155, 39, 0.1);
-            color: var(--gold);
-            padding: 5px 12px;
-            border-radius: 4px;
-            font-size: 0.8rem;
-            font-weight: 700;
-            border: 1px solid rgba(197, 155, 39, 0.2);
-        }
+.hamburger-menu{display:flex;flex-direction:column;gap:6px;cursor:pointer;z-index:1201;padding:10px;transition:var(--transition);background:none;border:none;}
+.hamburger-menu:hover{transform:scale(1.08);}
+.hamburger-menu .line{width:28px;height:2.5px;background:var(--gold);border-radius:3px;transition:var(--transition);}
+.hamburger-menu.active .line:nth-child(1){transform:translateY(8.5px) rotate(45deg);}
+.hamburger-menu.active .line:nth-child(2){opacity:0;}
+.hamburger-menu.active .line:nth-child(3){transform:translateY(-8.5px) rotate(-45deg);}
 
-        /* Team Grid */
-        .team-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        .team-card {
-            background: var(--glass);
-            border: 1px solid var(--glass-border);
-            border-radius: 16px;
-            padding: 2.5rem 2rem;
-            text-align: center;
-            backdrop-filter: blur(12px);
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
-            overflow: hidden;
-        }
-        .team-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 4px;
-            background: var(--gold);
-            transform: scaleX(0);
-            transition: transform 0.4s ease;
-        }
-        .team-card:hover {
-            transform: translateY(-10px);
-            background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(197, 155, 39, 0.5);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-        }
-        .team-card:hover::before { transform: scaleX(1); }
-        .member-img {
-            width: 130px; height: 130px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin: 0 auto 1.5rem auto;
-            border: 3px solid var(--glass-border);
-            transition: border-color 0.4s;
-        }
-        .team-card:hover .member-img { border-color: var(--gold); }
-        .member-name { font-size: 1.4rem; color: var(--white); margin-bottom: 0.5rem; }
-        .member-role {
-            color: var(--gold);
-            font-size: 0.8rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 1rem;
-        }
-        .view-profile-btn {
-            display: inline-block;
-            margin-top: 1rem;
-            padding: 8px 20px;
-            background: transparent;
-            color: var(--white);
-            border: 1px solid var(--glass-border);
-            border-radius: 30px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            transition: all 0.3s;
-        }
-        .team-card:hover .view-profile-btn {
-            background: var(--gold);
-            border-color: var(--gold);
-            color: var(--navy);
-        }
+.sidebar-overlay{position:fixed;inset:0;background:rgba(6,14,26,.6);backdrop-filter:blur(3px);z-index:1150;opacity:0;visibility:hidden;transition:var(--transition);}
+.sidebar-overlay.active{opacity:1;visibility:visible;}
+.sidebar{
+  position:fixed;top:0;right:-360px;width:320px;max-width:88vw;height:100vh;
+  background:rgba(9,20,36,.98);backdrop-filter:blur(22px);
+  border-left:1px solid var(--glass-border);box-shadow:-10px 0 40px rgba(0,0,0,.55);
+  padding:110px 28px 40px;transition:.55s cubic-bezier(.77,0,.18,1);
+  z-index:1200;display:flex;flex-direction:column;gap:8px;
+}
+.sidebar.active{right:0;}
+.sidebar a{
+  text-decoration:none;font-size:1.02rem;font-weight:600;color:var(--white);
+  padding:14px 18px;border-radius:12px;display:flex;align-items:center;gap:14px;border:1px solid transparent;
+  transition:var(--transition);opacity:0;transform:translateX(24px);cursor:pointer;background:none;
+}
+.sidebar.active a{opacity:1;transform:translateX(0);}
+.sidebar.active a:nth-child(1){transition-delay:.08s;}
+.sidebar.active a:nth-child(2){transition-delay:.14s;}
+.sidebar.active a:nth-child(3){transition-delay:.2s;}
+.sidebar.active a:nth-child(4){transition-delay:.26s;}
+.sidebar.active a:nth-child(5){transition-delay:.32s;}
+.sidebar.active a:nth-child(6){transition-delay:.38s;}
+.sidebar a:hover{background:rgba(197,155,39,.1);border-color:rgba(197,155,39,.3);color:var(--gold);transform:translateX(6px);}
+.sidebar a i{color:var(--gold);width:18px;}
+.sidebar .sb-lock{margin-top:auto;border-top:1px solid var(--glass-border);padding-top:20px;}
 
-        /* Reviews */
-        .reviews-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        .review-card {
-            background: var(--glass);
-            border: 1px solid var(--glass-border);
-            padding: 2.5rem;
-            border-radius: 16px;
-            position: relative;
-        }
-        .review-card i.fa-quote-right {
-            font-size: 2rem;
-            color: rgba(197, 155, 39, 0.2);
-            position: absolute;
-            top: 2rem; right: 2rem;
-        }
-        .stars { color: var(--gold); margin-bottom: 1rem; font-size: 0.9rem; }
-        .review-text { font-style: italic; color: #cbd5e1; line-height: 1.6; margin-bottom: 1.5rem; }
-        .reviewer-name { font-weight: 700; font-family: 'Montserrat'; }
-        .reviewer-title { font-size: 0.8rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; }
+/* =========================================================
+   5. GENERIC LAYOUT
+========================================================= */
+#page-content{position:relative;}
+section{position:relative;z-index:10;padding:8rem 5%;}
+.section-header{text-align:center;max-width:720px;margin:0 auto 4rem;}
+.section-tag{
+  color:var(--gold);font-weight:700;letter-spacing:3px;text-transform:uppercase;
+  display:inline-block;font-size:.78rem;background:rgba(197,155,39,.1);
+  padding:8px 20px;border-radius:30px;border:1px solid rgba(197,155,39,.22);margin-bottom:1.1rem;
+}
+.section-title{font-size:clamp(2rem,4vw,3.4rem);line-height:1.1;text-transform:uppercase;font-weight:800;}
+.section-sub{color:var(--ink);margin-top:1.1rem;font-size:1.05rem;line-height:1.6;}
 
-        /* Contact Form */
-        .contact-container {
-            max-width: 800px;
-            margin: 0 auto;
-            background: var(--glass);
-            border: 1px solid var(--glass-border);
-            padding: 4rem;
-            border-radius: 24px;
-            backdrop-filter: blur(15px);
-        }
-        .form-group { margin-bottom: 2rem; }
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #cbd5e1;
-            font-weight: 600;
-            text-align: left;
-        }
-        .form-control {
-            width: 100%;
-            background: rgba(0,0,0,0.2);
-            border: 1px solid var(--glass-border);
-            padding: 1rem 1.5rem;
-            border-radius: 8px;
-            color: var(--white);
-            font-family: 'Inter';
-            font-size: 1rem;
-            transition: border-color 0.3s;
-        }
-        .form-control:focus {
-            outline: none;
-            border-color: var(--gold);
-        }
-        textarea.form-control { resize: vertical; min-height: 120px; }
-        .submit-btn {
-            width: 100%;
-            background: var(--gold);
-            color: var(--navy);
-            border: none;
-            padding: 1.2rem;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-family: 'Montserrat';
-        }
-        .submit-btn:hover {
-            background: var(--white);
-            box-shadow: 0 0 30px rgba(255,255,255,0.2);
-        }
+.btn-gold{
+  background:var(--gold);color:var(--navy);padding:15px 34px;border-radius:30px;
+  font-weight:800;text-decoration:none;text-transform:uppercase;font-size:.92rem;letter-spacing:1.6px;
+  transition:var(--transition);border:1px solid var(--gold);display:inline-flex;align-items:center;gap:10px;cursor:pointer;
+}
+.btn-gold:hover{background:transparent;color:var(--gold);box-shadow:0 0 30px rgba(197,155,39,.35);transform:translateY(-4px);}
+.btn-outline{
+  background:transparent;color:var(--white);padding:15px 34px;border-radius:30px;font-weight:700;
+  text-decoration:none;text-transform:uppercase;font-size:.85rem;letter-spacing:1.6px;border:1px solid var(--glass-border);
+  transition:var(--transition);display:inline-flex;align-items:center;gap:10px;cursor:pointer;
+}
+.btn-outline:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-4px);}
+.btn-danger{background:var(--danger);color:#fff;border-color:var(--danger);}
+.btn-danger:hover{background:transparent;color:var(--danger);box-shadow:0 0 30px rgba(227,91,91,.3);}
 
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 3rem 5%;
-            border-top: 1px solid var(--glass-border);
-            background: rgba(0,0,0,0.2);
-            color: #94a3b8;
-            font-size: 0.9rem;
-        }
+/* =========================================================
+   6. HERO
+========================================================= */
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding-top:9rem;position:relative;}
+.hero-inner{max-width:900px;position:relative;z-index:5;}
+.hero h1{
+  font-size:clamp(2.6rem,7vw,5.3rem);line-height:1.05;margin-bottom:1.4rem;text-transform:uppercase;font-weight:900;
+  background:linear-gradient(135deg,#fff 30%,#cbd5e1 70%,var(--gold) 130%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-size:200% auto;
+  animation:shine 8s linear infinite;
+}
+@keyframes shine{to{background-position:200% center;}}
+.hero p{color:var(--ink);max-width:640px;margin:0 auto 2.6rem;line-height:1.7;font-size:1.15rem;}
+.hero-ctas{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;}
+.scroll-indicator{
+  position:absolute;bottom:2.4rem;left:50%;transform:translateX(-50%);color:var(--ink-dim);
+  display:flex;flex-direction:column;align-items:center;gap:8px;font-size:.7rem;letter-spacing:2px;text-transform:uppercase;
+  animation:bob 2.4s ease-in-out infinite;
+}
+@keyframes bob{0%,100%{transform:translate(-50%,0);}50%{transform:translate(-50%,10px);}}
 
-        /* Profile Detail Overlay */
-        #profile-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: #09090b;
-            z-index: 1000;
-            transform: translateX(100%);
-            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-            display: flex;
-            flex-direction: column;
-        }
-        #profile-overlay.active { transform: translateX(0); }
-        .overlay-nav {
-            padding: 1.5rem 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(9, 9, 11, 0.95);
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-        .back-btn {
-            background: transparent;
-            color: var(--white);
-            border: 1px solid var(--glass-border);
-            padding: 10px 24px;
-            border-radius: 30px;
-            font-family: 'Inter';
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            transition: all 0.3s;
-        }
-        .back-btn:hover { background: rgba(255,255,255,0.1); border-color: var(--white); }
-        .iframe-container { flex: 1; width: 100%; background: #09090b; }
-        iframe { width: 100%; height: 100%; border: none; }
+/* =========================================================
+   7. ABOUT
+========================================================= */
+.about-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:3.5rem;max-width:1180px;margin:0 auto;align-items:center;}
+@media(max-width:900px){.about-grid{grid-template-columns:1fr;}}
+.about-copy p{color:var(--ink);line-height:1.85;font-size:1.05rem;margin-bottom:1.2rem;}
+.about-copy p strong{color:var(--white);}
+.about-stats{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;}
+.about-stat{
+  background:var(--glass);border:1px solid var(--glass-border);border-radius:var(--radius);padding:1.8rem 1.4rem;
+  text-align:center;backdrop-filter:blur(10px);transition:var(--transition);
+}
+.about-stat:hover{border-color:rgba(197,155,39,.4);transform:translateY(-6px);}
+.about-stat i{color:var(--gold);font-size:1.6rem;margin-bottom:.7rem;}
+.about-stat h4{font-size:1.05rem;margin-bottom:.4rem;}
+.about-stat p{color:var(--ink);font-size:.82rem;line-height:1.5;}
 
-        @media (max-width: 992px) {
-            .nav-links { display: none; }
-            .stats-grid { grid-template-columns: 1fr; }
-            .contact-container { padding: 2rem; }
-        }
-    </style>
+/* =========================================================
+   8. EXPERTISE
+========================================================= */
+.expertise-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.8rem;max-width:1200px;margin:0 auto;}
+.expertise-card{
+  background:var(--glass);border:1px solid var(--glass-border);border-radius:var(--radius);padding:2.4rem 2rem;
+  transition:var(--transition);position:relative;overflow:hidden;backdrop-filter:blur(10px);
+}
+.expertise-card::after{
+  content:'';position:absolute;inset:0;border-radius:var(--radius);opacity:0;transition:var(--transition);
+  background:radial-gradient(300px circle at var(--mx,50%) var(--my,50%),rgba(197,155,39,.12),transparent 60%);
+}
+.expertise-card:hover::after{opacity:1;}
+.expertise-card:hover{transform:translateY(-8px);border-color:rgba(197,155,39,.4);box-shadow:0 25px 50px rgba(0,0,0,.4);}
+.expertise-card i{color:var(--gold);font-size:1.8rem;margin-bottom:1.2rem;display:block;}
+.expertise-card h3{font-size:1.15rem;margin-bottom:.7rem;text-transform:uppercase;letter-spacing:.5px;}
+.expertise-card p{color:var(--ink);font-size:.88rem;line-height:1.6;}
+
+/* =========================================================
+   9. TEAM
+========================================================= */
+.team-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:2rem;max-width:1200px;margin:0 auto;}
+.team-card{
+  background:var(--glass);border:1px solid var(--glass-border);border-radius:20px;padding:2.6rem 1.8rem;
+  text-align:center;backdrop-filter:blur(12px);cursor:pointer;transition:var(--transition);position:relative;overflow:hidden;
+}
+.team-card::before{content:'';position:absolute;top:0;left:0;width:100%;height:3px;background:var(--gold);transform:scaleX(0);transition:var(--transition);}
+.team-card:hover{transform:translateY(-14px);background:rgba(255,255,255,.05);border-color:rgba(197,155,39,.5);box-shadow:0 30px 60px rgba(0,0,0,.5);}
+.team-card:hover::before{transform:scaleX(1);}
+.member-img-wrap{width:132px;height:132px;margin:0 auto 1.4rem;position:relative;}
+.member-img{width:100%;height:100%;border-radius:50%;object-fit:cover;border:4px solid rgba(255,255,255,.1);transition:var(--transition);}
+.member-fallback{
+  width:100%;height:100%;border-radius:50%;display:none;align-items:center;justify-content:center;
+  font-weight:800;font-size:1.6rem;color:var(--navy);background:linear-gradient(135deg,var(--gold),#8a6a17);border:4px solid rgba(255,255,255,.1);
+}
+.team-card:hover .member-img,.team-card:hover .member-fallback{border-color:var(--gold);transform:scale(1.05);}
+.member-name{font-size:1.35rem;margin-bottom:.35rem;font-weight:800;}
+.member-role{color:var(--gold);font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:1rem;}
+.member-desc{color:var(--ink);font-size:.82rem;line-height:1.55;margin-bottom:1.1rem;min-height:44px;}
+.chip-row{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-bottom:1.3rem;}
+.chip{font-size:.66rem;padding:5px 11px;border-radius:20px;background:rgba(197,155,39,.1);border:1px solid rgba(197,155,39,.25);color:var(--gold);text-transform:uppercase;letter-spacing:.4px;}
+.view-profile-btn{
+  display:inline-block;padding:10px 26px;background:transparent;color:var(--white);border:1px solid var(--glass-border);
+  border-radius:30px;font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;transition:var(--transition);
+}
+.team-card:hover .view-profile-btn{background:var(--gold);border-color:var(--gold);color:var(--navy);}
+
+/* =========================================================
+   10. PROFILE VIEW
+========================================================= */
+#profile-view{display:none;padding-top:7rem;}
+.profile-hero{
+  position:relative;padding:2rem 5% 4rem;overflow:hidden;
+  background:radial-gradient(circle at 20% 20%,rgba(197,155,39,.14),transparent 55%),var(--navy-light);
+}
+.profile-back{
+  display:inline-flex;align-items:center;gap:8px;color:var(--ink);text-decoration:none;font-size:.85rem;
+  font-weight:600;margin-bottom:2.4rem;cursor:pointer;background:none;border:none;transition:var(--transition);
+}
+.profile-back:hover{color:var(--gold);gap:12px;}
+.profile-hero-grid{display:flex;gap:2.6rem;align-items:center;flex-wrap:wrap;max-width:1180px;margin:0 auto;}
+.profile-portrait-wrap{width:170px;height:170px;flex-shrink:0;position:relative;}
+.profile-portrait{width:100%;height:100%;border-radius:28px;object-fit:cover;border:4px solid rgba(197,155,39,.35);box-shadow:0 20px 50px rgba(0,0,0,.45);}
+.profile-fallback{
+  width:100%;height:100%;border-radius:28px;display:none;align-items:center;justify-content:center;font-weight:800;
+  font-size:2.4rem;color:var(--navy);background:linear-gradient(135deg,var(--gold),#8a6a17);border:4px solid rgba(197,155,39,.35);
+}
+.profile-id h1{font-size:clamp(1.8rem,4vw,2.7rem);text-transform:uppercase;font-weight:900;margin-bottom:.4rem;}
+.profile-id .p-role{color:var(--gold);font-weight:700;letter-spacing:1px;text-transform:uppercase;font-size:.95rem;margin-bottom:.9rem;}
+.profile-id .p-tagline{color:var(--ink);font-style:italic;max-width:560px;line-height:1.6;}
+
+.quick-info{display:flex;flex-wrap:wrap;gap:12px;max-width:1180px;margin:2.4rem auto 0;}
+.info-pill{
+  display:flex;align-items:center;gap:10px;background:var(--glass);border:1px solid var(--glass-border);
+  padding:11px 20px;border-radius:30px;font-size:.85rem;backdrop-filter:blur(10px);text-decoration:none;color:var(--white);transition:var(--transition);
+}
+.info-pill i{color:var(--gold);}
+.info-pill.link:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-3px);}
+
+.profile-body{max-width:1180px;margin:0 auto;padding:4rem 5%;display:grid;grid-template-columns:2fr 1fr;gap:3rem;}
+@media(max-width:900px){.profile-body{grid-template-columns:1fr;padding:3rem 5%;}}
+.p-section{margin-bottom:3rem;}
+.p-section h2{
+  font-size:1.4rem;text-transform:uppercase;letter-spacing:.5px;margin-bottom:1.4rem;display:flex;align-items:center;gap:12px;
+  padding-bottom:.9rem;border-bottom:1px solid var(--glass-border);
+}
+.p-section h2 i{color:var(--gold);}
+.p-section .bio-text{color:var(--ink);line-height:1.85;font-size:1rem;}
+
+.timeline{list-style:none;display:flex;flex-direction:column;gap:1.6rem;position:relative;}
+.timeline li{position:relative;padding-left:28px;}
+.timeline li::before{content:'';position:absolute;left:6px;top:6px;width:11px;height:11px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 4px rgba(197,155,39,.15);}
+.timeline li::after{content:'';position:absolute;left:11px;top:20px;bottom:-26px;width:1px;background:var(--glass-border);}
+.timeline li:last-child::after{display:none;}
+.timeline h4{font-size:1.02rem;margin-bottom:.3rem;}
+.timeline .t-meta{color:var(--gold);font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:.5rem;}
+.timeline p{color:var(--ink);font-size:.9rem;line-height:1.6;}
+.timeline ul{margin-top:.5rem;padding-left:1.1rem;color:var(--ink);font-size:.87rem;line-height:1.7;}
+
+.skill-groups{display:flex;flex-direction:column;gap:1.4rem;}
+.skill-group h4{font-size:.78rem;text-transform:uppercase;letter-spacing:1px;color:var(--gold);margin-bottom:.7rem;}
+.skill-tags{display:flex;flex-wrap:wrap;gap:8px;}
+.skill-tag{font-size:.78rem;padding:7px 14px;border-radius:10px;background:var(--glass);border:1px solid var(--glass-border);color:var(--white);}
+
+.edu-card,.cert-card{background:var(--glass);border:1px solid var(--glass-border);border-radius:14px;padding:1.3rem 1.4rem;margin-bottom:1rem;}
+.edu-card h4,.cert-card h4{font-size:.98rem;margin-bottom:.3rem;}
+.edu-card .meta,.cert-card .meta{color:var(--gold);font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.4px;margin-bottom:.4rem;}
+.edu-card p,.cert-card p{color:var(--ink);font-size:.85rem;line-height:1.55;}
+
+.sidebar-block{background:var(--glass);border:1px solid var(--glass-border);border-radius:var(--radius);padding:1.8rem;margin-bottom:1.6rem;backdrop-filter:blur(10px);}
+.sidebar-block h3{font-size:.85rem;text-transform:uppercase;letter-spacing:1px;color:var(--gold);margin-bottom:1.1rem;}
+.contact-actions{display:flex;flex-direction:column;gap:10px;}
+.contact-actions a,.contact-actions .conf{
+  display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:12px;background:rgba(255,255,255,.02);
+  border:1px solid var(--glass-border);text-decoration:none;color:var(--white);font-size:.85rem;transition:var(--transition);
+}
+.contact-actions a:hover{border-color:var(--gold);color:var(--gold);transform:translateX(4px);}
+.contact-actions .conf{color:var(--ink-dim);font-style:italic;cursor:default;}
+.contact-actions i{color:var(--gold);width:16px;}
+
+.expertise-tag-list{display:flex;flex-direction:column;gap:8px;}
+.expertise-tag-list span{display:flex;align-items:center;gap:10px;font-size:.85rem;color:var(--ink);}
+.expertise-tag-list i{color:var(--gold);font-size:.7rem;}
+
+.not-found{text-align:center;padding:10rem 5% 8rem;}
+.not-found i{font-size:3rem;color:var(--gold);margin-bottom:1.5rem;}
+.not-found h1{font-size:2rem;margin-bottom:1rem;text-transform:uppercase;}
+.not-found p{color:var(--ink);margin-bottom:2.2rem;}
+
+/* =========================================================
+   11. CONTACT
+========================================================= */
+.contact-container{max-width:640px;margin:0 auto;background:var(--glass);border:1px solid var(--glass-border);border-radius:24px;padding:3rem 2.6rem;backdrop-filter:blur(14px);}
+@media(max-width:600px){.contact-container{padding:2.2rem 1.5rem;}}
+.form-group{margin-bottom:1.4rem;}
+.form-group label{display:block;font-size:.85rem;font-weight:600;margin-bottom:.6rem;color:var(--white);}
+.form-control{
+  width:100%;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid var(--glass-border);border-radius:12px;
+  color:var(--white);font-family:inherit;font-size:.95rem;transition:var(--transition);
+}
+.form-control::placeholder{color:var(--ink-dim);}
+.form-control:focus{outline:none;border-color:var(--gold);background:rgba(255,255,255,.06);}
+.form-control.invalid{border-color:var(--danger);}
+.field-error{color:var(--danger);font-size:.75rem;margin-top:.4rem;display:none;}
+.field-error.show{display:block;}
+textarea.form-control{resize:vertical;min-height:120px;}
+.submit-btn{
+  width:100%;padding:16px;background:var(--gold);color:var(--navy);border:none;border-radius:12px;font-weight:800;
+  text-transform:uppercase;letter-spacing:1.5px;font-size:.9rem;cursor:pointer;transition:var(--transition);display:flex;align-items:center;justify-content:center;gap:10px;
+}
+.submit-btn:hover{background:var(--gold-bright);box-shadow:0 10px 30px rgba(197,155,39,.3);transform:translateY(-3px);}
+.submit-btn:disabled{opacity:.6;cursor:not-allowed;transform:none;}
+
+/* =========================================================
+   12. FOOTER
+========================================================= */
+footer{position:relative;z-index:10;padding:4rem 5% 2.5rem;border-top:1px solid var(--glass-border);}
+.footer-grid{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1.4fr 1fr;gap:3rem;padding-bottom:2.4rem;}
+@media(max-width:700px){.footer-grid{grid-template-columns:1fr;}}
+.footer-brand p{color:var(--ink);font-size:.9rem;line-height:1.7;margin-top:1rem;max-width:420px;}
+.footer-links h4{font-size:.78rem;text-transform:uppercase;letter-spacing:1px;color:var(--gold);margin-bottom:1.1rem;}
+.footer-links a{display:block;color:var(--ink);text-decoration:none;font-size:.88rem;margin-bottom:.8rem;transition:var(--transition);cursor:pointer;background:none;border:none;font-family:inherit;text-align:left;}
+.footer-links a:hover{color:var(--gold);}
+.footer-bottom{max-width:1200px;margin:0 auto;text-align:center;color:var(--ink-dim);font-size:.8rem;padding-top:2rem;border-top:1px solid var(--glass-border);}
+
+/* =========================================================
+   13. TOASTS
+========================================================= */
+#toast-container{position:fixed;top:24px;right:24px;z-index:4000;display:flex;flex-direction:column;gap:12px;max-width:360px;}
+@media(max-width:500px){#toast-container{left:16px;right:16px;max-width:none;}}
+.toast{
+  background:rgba(9,20,36,.97);border:1px solid var(--glass-border);border-left:4px solid var(--gold);border-radius:14px;
+  padding:16px 18px;display:flex;gap:14px;align-items:flex-start;box-shadow:0 20px 50px rgba(0,0,0,.5);backdrop-filter:blur(14px);
+  animation:toastIn .4s var(--ease);
+}
+.toast.error{border-left-color:var(--danger);}
+.toast.success{border-left-color:var(--success);}
+@keyframes toastIn{from{opacity:0;transform:translateX(40px);}to{opacity:1;transform:translateX(0);}}
+.toast .t-icon{font-size:1.3rem;color:var(--gold);flex-shrink:0;margin-top:2px;}
+.toast.error .t-icon{color:var(--danger);}
+.toast.success .t-icon{color:var(--success);}
+.toast .t-title{font-weight:700;font-size:.9rem;margin-bottom:.3rem;}
+.toast .t-msg{font-size:.8rem;color:var(--ink);line-height:1.5;}
+.toast .t-close{margin-left:auto;background:none;border:none;color:var(--ink-dim);cursor:pointer;font-size:.85rem;flex-shrink:0;}
+
+/* =========================================================
+   14. MODALS (password gate + query detail)
+========================================================= */
+.modal-overlay{
+  position:fixed;inset:0;background:rgba(6,14,26,.85);backdrop-filter:blur(10px);z-index:3000;
+  display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;visibility:hidden;transition:var(--transition);
+}
+.modal-overlay.active{opacity:1;visibility:visible;}
+.modal-box{
+  background:var(--navy-light);border:1px solid var(--glass-border);border-radius:22px;width:100%;max-width:420px;
+  padding:2.6rem 2.2rem;text-align:center;transform:scale(.9);transition:var(--transition);box-shadow:0 30px 80px rgba(0,0,0,.5);
+}
+.modal-overlay.active .modal-box{transform:scale(1);}
+.modal-box i.gate-icon{font-size:2.2rem;color:var(--gold);margin-bottom:1.2rem;}
+.modal-box h3{font-size:1.3rem;text-transform:uppercase;margin-bottom:.6rem;}
+.modal-box p.sub{color:var(--ink);font-size:.85rem;margin-bottom:1.8rem;}
+.pwd-wrap{position:relative;margin-bottom:1rem;}
+.pwd-wrap .form-control{padding-right:48px;text-align:center;letter-spacing:2px;}
+.pwd-toggle{position:absolute;right:14px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--ink);cursor:pointer;}
+.gate-error{color:var(--danger);font-size:.82rem;min-height:20px;margin-bottom:.6rem;}
+.gate-error.shake{animation:shake .4s;}
+@keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-8px);}75%{transform:translateX(8px);}}
+.modal-actions{display:flex;gap:12px;margin-top:.6rem;}
+.modal-actions button{flex:1;}
+
+/* query detail drawer */
+.drawer-overlay{position:fixed;inset:0;background:rgba(6,14,26,.7);backdrop-filter:blur(6px);z-index:2500;opacity:0;visibility:hidden;transition:var(--transition);}
+.drawer-overlay.active{opacity:1;visibility:visible;}
+.drawer{
+  position:fixed;top:0;right:-460px;width:440px;max-width:92vw;height:100vh;background:var(--navy-light);
+  border-left:1px solid var(--glass-border);box-shadow:-20px 0 50px rgba(0,0,0,.5);z-index:2600;
+  padding:2.4rem 2rem;overflow-y:auto;transition:.5s cubic-bezier(.77,0,.18,1);
+}
+.drawer.active{right:0;}
+.drawer-close{background:none;border:none;color:var(--ink);font-size:1.2rem;cursor:pointer;float:right;}
+.drawer h3{font-size:1.3rem;margin:2.5rem 0 .4rem;}
+.drawer .status-badge{display:inline-block;font-size:.7rem;padding:5px 12px;border-radius:20px;text-transform:uppercase;letter-spacing:.5px;font-weight:700;margin-bottom:1.6rem;}
+.status-new{background:rgba(197,155,39,.15);color:var(--gold);border:1px solid rgba(197,155,39,.3);}
+.status-read{background:rgba(148,163,184,.15);color:#94a3b8;border:1px solid rgba(148,163,184,.3);}
+.status-replied{background:rgba(63,191,127,.15);color:var(--success);border:1px solid rgba(63,191,127,.3);}
+.drawer-field{margin-bottom:1.3rem;}
+.drawer-field label{font-size:.7rem;text-transform:uppercase;letter-spacing:1px;color:var(--gold);display:block;margin-bottom:.4rem;}
+.drawer-field p{font-size:.92rem;line-height:1.6;word-break:break-word;}
+.drawer-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:1.8rem;}
+.drawer-actions button,.drawer-actions a{
+  flex:1 1 auto;padding:11px 14px;border-radius:10px;border:1px solid var(--glass-border);background:rgba(255,255,255,.03);
+  color:var(--white);font-size:.78rem;cursor:pointer;text-decoration:none;text-align:center;transition:var(--transition);
+  display:flex;align-items:center;justify-content:center;gap:6px;
+}
+.drawer-actions button:hover,.drawer-actions a:hover{border-color:var(--gold);color:var(--gold);}
+.drawer-actions .danger:hover{border-color:var(--danger);color:var(--danger);}
+
+/* =========================================================
+   15. ADMIN QUERIES DASHBOARD
+========================================================= */
+#admin-view{display:none;padding-top:8rem;}
+.admin-header-bar{max-width:1240px;margin:0 auto 2.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1.2rem;max-width:1240px;margin:0 auto 2.6rem;}
+.stat-card{background:var(--glass);border:1px solid var(--glass-border);border-radius:16px;padding:1.6rem;backdrop-filter:blur(10px);}
+.stat-card .num{font-size:2.1rem;font-weight:800;color:var(--gold);font-family:'Montserrat';}
+.stat-card .lbl{color:var(--ink);font-size:.78rem;text-transform:uppercase;letter-spacing:1px;margin-top:.4rem;}
+
+.toolbar{max-width:1240px;margin:0 auto 2rem;display:flex;gap:14px;flex-wrap:wrap;align-items:center;justify-content:space-between;}
+.search-box{position:relative;flex:1;min-width:220px;}
+.search-box i{position:absolute;left:16px;top:50%;transform:translateY(-50%);color:var(--ink-dim);}
+.search-box input{padding-left:44px;}
+.filter-group{display:flex;gap:8px;flex-wrap:wrap;}
+.filter-chip{
+  padding:9px 18px;border-radius:20px;border:1px solid var(--glass-border);background:var(--glass);color:var(--ink);
+  font-size:.78rem;cursor:pointer;transition:var(--transition);text-transform:uppercase;letter-spacing:.5px;
+}
+.filter-chip.active{background:var(--gold);color:var(--navy);border-color:var(--gold);font-weight:700;}
+.toolbar-actions{display:flex;gap:10px;flex-wrap:wrap;}
+.icon-btn{padding:10px 16px;border-radius:10px;border:1px solid var(--glass-border);background:var(--glass);color:var(--white);cursor:pointer;font-size:.8rem;display:flex;align-items:center;gap:8px;transition:var(--transition);}
+.icon-btn:hover{border-color:var(--gold);color:var(--gold);}
+
+.query-table-wrap{max-width:1240px;margin:0 auto;}
+table.q-table{width:100%;border-collapse:collapse;background:var(--glass);border:1px solid var(--glass-border);border-radius:16px;overflow:hidden;}
+table.q-table th{text-align:left;padding:16px 18px;background:rgba(255,255,255,.03);color:var(--gold);font-size:.72rem;text-transform:uppercase;letter-spacing:1px;}
+table.q-table td{padding:16px 18px;border-top:1px solid var(--glass-border);font-size:.85rem;vertical-align:top;}
+table.q-table tbody tr{cursor:pointer;transition:var(--transition);}
+table.q-table tbody tr:hover{background:rgba(197,155,39,.05);}
+.msg-preview{max-width:260px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--ink);}
+@media(max-width:900px){
+  table.q-table thead{display:none;}
+  table.q-table,table.q-table tbody,table.q-table tr,table.q-table td{display:block;width:100%;}
+  table.q-table tr{border:1px solid var(--glass-border);border-radius:14px;margin-bottom:14px;padding:.6rem .2rem;background:var(--glass);}
+  table.q-table td{border-top:none;padding:8px 16px;}
+  table.q-table td::before{content:attr(data-label);display:block;color:var(--gold);font-size:.65rem;text-transform:uppercase;letter-spacing:1px;margin-bottom:3px;}
+}
+.empty-state{text-align:center;padding:5rem 2rem;color:var(--ink);}
+.empty-state i{font-size:2.6rem;color:var(--gold);margin-bottom:1.2rem;display:block;}
+.empty-state h3{color:var(--white);margin-bottom:.6rem;text-transform:uppercase;}
+
+/* =========================================================
+   16. BACK TO TOP
+========================================================= */
+#backToTop{
+  position:fixed;bottom:26px;right:26px;width:50px;height:50px;border-radius:50%;background:var(--gold);color:var(--navy);
+  border:none;display:flex;align-items:center;justify-content:center;font-size:1.1rem;cursor:pointer;z-index:900;
+  opacity:0;visibility:hidden;transform:translateY(20px);transition:var(--transition);box-shadow:0 10px 30px rgba(0,0,0,.4);
+}
+#backToTop.show{opacity:1;visibility:visible;transform:translateY(0);}
+#backToTop:hover{background:var(--gold-bright);transform:translateY(-4px);}
+
+/* responsive tweaks */
+@media(max-width:768px){
+  .nav-links{display:none;}
+  section{padding:5.5rem 5%;}
+  .hero{padding-top:8rem;}
+}
+</style>
 </head>
 <body>
 
-    <div class="ambient-bg">
-        <div class="orb orb-1"></div>
-        <div class="orb orb-2"></div>
+<!-- PRELOADER -->
+<div id="preloader" aria-hidden="true">
+  <div class="pre-mark">DEADLINE <span>MASTERS</span></div>
+  <div class="pre-ring">
+    <svg viewBox="0 0 74 74">
+      <circle class="track" cx="37" cy="37" r="33"></circle>
+      <circle class="bar" cx="37" cy="37" r="33"></circle>
+    </svg>
+  </div>
+  <div class="pre-sub">Deploying Task Force</div>
+</div>
+
+<div class="ambient-bg" aria-hidden="true">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+</div>
+<div class="glow-follow" id="glowFollow" aria-hidden="true"></div>
+
+<!-- NAVIGATION -->
+<nav id="mainNav">
+  <button class="brand-logo" onclick="router.go('home')" aria-label="Deadline Masters home"><i class="fa-solid fa-bolt"></i> DEADLINE MASTERS</button>
+  <div class="nav-links">
+    <a onclick="router.go('home')">Home</a>
+    <a onclick="router.go('about')">About</a>
+    <a onclick="router.go('expertise')">Expertise</a>
+    <a onclick="router.go('team')">Team</a>
+    <a onclick="router.go('contact')" class="nav-cta btn-gold" style="padding:10px 24px;">Deploy Task Force</a>
+  </div>
+  <button class="hamburger-menu" id="hamburgerBtn" onclick="toggleSidebar()" aria-label="Open menu" aria-expanded="false" aria-controls="sidebar">
+    <span class="line"></span><span class="line"></span><span class="line"></span>
+  </button>
+</nav>
+
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+<aside class="sidebar" id="sidebar" aria-label="Site navigation">
+  <a onclick="router.go('home')"><i class="fa-solid fa-house"></i> Home</a>
+  <a onclick="router.go('about')"><i class="fa-solid fa-shield-halved"></i> About</a>
+  <a onclick="router.go('expertise')"><i class="fa-solid fa-layer-group"></i> Expertise</a>
+  <a onclick="router.go('team')"><i class="fa-solid fa-users"></i> Team</a>
+  <a onclick="router.go('contact')"><i class="fa-solid fa-paper-plane"></i> Contact</a>
+  <div class="sb-lock">
+    <a onclick="openGate()"><i class="fa-solid fa-lock"></i> Secure Queries</a>
+  </div>
+</aside>
+
+<!-- MAIN PUBLIC CONTENT -->
+<main id="page-content">
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="hero-inner">
+      <span class="section-tag reveal-up">Elite Corporate Task Force</span>
+      <h1 class="reveal-up" style="transition-delay:.05s;">When Time Collapses,<br>We Step In.</h1>
+      <p class="reveal-up" style="transition-delay:.1s;">A high-stakes, rapid-response task force spanning finance, technology, law, real estate, digital strategy and sales — resolving critical backlogs, infrastructure crashes and eleventh-hour compliance before the deadline expires.</p>
+      <div class="hero-ctas reveal-scale" style="transition-delay:.15s;">
+        <a class="btn-gold" onclick="router.go('contact')">Deploy Task Force <i class="fa-solid fa-arrow-right"></i></a>
+        <a class="btn-outline" onclick="router.go('team')">Meet The Team</a>
+      </div>
     </div>
+    <div class="scroll-indicator" aria-hidden="true"><span>Scroll</span><i class="fa-solid fa-chevron-down"></i></div>
+  </section>
 
-    <!-- Main Website View -->
-    <div id="main-view">
-        
-        <nav>
-            <a href="#" class="brand-logo"><i class="fa-solid fa-stopwatch"></i> DEADLINE MASTERS</a>
-            <ul class="nav-links">
-                <li><a href="#about">About</a></li>
-                <li><a href="#works">Our Work</a></li>
-                <li><a href="#team">The Team</a></li>
-                <li><a href="#reviews">Reviews</a></li>
-            </ul>
-            <a href="#contact" class="btn-gold">Initiate SOS</a>
-        </nav>
-
-        <section class="hero" id="home">
-            <div style="max-width: 900px; margin: 0 auto; position: relative; z-index: 10;">
-                <span class="section-tag"><i class="fa-solid fa-bolt"></i> Elite Crisis Resolution</span>
-                <h1>When Time Collapses, We Step In.</h1>
-                <p>We are a high-stakes, rapid-response corporate task force. We resolve critical accounting backlogs, digital infrastructure crashes, and eleventh-hour legal compliances before the deadline expires.</p>
-                <a href="#contact" class="btn-gold" style="padding: 16px 36px; font-size: 1rem;">Deploy Task Force <i class="fa-solid fa-arrow-right" style="margin-left: 8px;"></i></a>
-            </div>
-        </section>
-
-        <section id="about">
-            <div class="section-header">
-                <span class="section-tag">Corporate Impact</span>
-                <h2 class="section-title">Execution By The Numbers</h2>
-            </div>
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-number">500+</div>
-                    <div class="stat-label">Corporate Crises Averted</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">&lt; 1h</div>
-                    <div class="stat-label">Average Deployment Time</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">100%</div>
-                    <div class="stat-label">Ironclad NDA Compliance</div>
-                </div>
-            </div>
-        </section>
-
-        <section id="works">
-            <div class="section-header">
-                <span class="section-tag">Our Works & Services</span>
-                <h2 class="section-title">Specialized Rescue Protocols</h2>
-            </div>
-            <div class="works-grid">
-                <div class="work-card">
-                    <i class="fa-solid fa-chart-pie work-icon"></i>
-                    <h3>Financial Backlog Clearance</h3>
-                    <p>Urgent corporate bookkeeping, rapid clearing of financial backlogs for sudden audits, expedited GST/Income Tax preparation, and high-speed compilation of balance sheets.</p>
-                    <span class="work-achievement">Saved ₹50M+ in Audit Penalties</span>
-                </div>
-                <div class="work-card">
-                    <i class="fa-solid fa-server work-icon"></i>
-                    <h3>Digital Infrastructure Rescue</h3>
-                    <p>Immediate resolution of server crashes, database errors, and ultra-fast turnaround for emergency e-commerce storefront deployments before major product launches.</p>
-                    <span class="work-achievement">99.9% Uptime Restored in &lt;2hrs</span>
-                </div>
-                <div class="work-card">
-                    <i class="fa-solid fa-scale-balanced work-icon"></i>
-                    <h3>11th-Hour Legal Compliance</h3>
-                    <p>Urgent ROC & MCA compliances, event-based statutory filings, and immediate integration of recent legislative updates to protect company directors from disqualification.</p>
-                    <span class="work-achievement">100+ Filings Executed Same-Day</span>
-                </div>
-            </div>
-        </section>
-
-        <section id="team">
-            <div class="section-header">
-                <span class="section-tag">The Masters</span>
-                <h2 class="section-title">Elite Task Force</h2>
-                <p style="color: #94a3b8; margin-top: 1rem;">Click on any profile to access their highly classified operational briefing.</p>
-            </div>
-            <div class="team-grid">
-                <div class="team-card" onclick="openProfile('rohit')">
-                    <img src="https://i.ibb.co/xtssQYJw/IMG-20260816-WA0001.jpg" alt="Rohit Desai" class="member-img">
-                    <h3 class="member-name">Rohit Desai</h3>
-                    <p class="member-role">Multi-Disciplinary Consultant</p>
-                    <div class="view-profile-btn">View Dossier</div>
-                </div>
-
-                <div class="team-card" onclick="openProfile('sahil')">
-                    <img src="https://i.ibb.co/xtsDN4N2/file-0000000037a4821198b450c135eda404-1.png" alt="Sahil Desai" class="member-img">
-                    <h3 class="member-name">Sahil Desai</h3>
-                    <p class="member-role">Finance & AI Operations</p>
-                    <div class="view-profile-btn">View Dossier</div>
-                </div>
-
-                <div class="team-card" onclick="openProfile('meraj')">
-                    <img src="https://i.ibb.co/vvHQ29Zr/IMG-20260816-WA0035.jpg" alt="Meraj Desai" class="member-img">
-                    <h3 class="member-name">Meraj Desai</h3>
-                    <p class="member-role">Digital Strategy & Creator</p>
-                    <div class="view-profile-btn">View Dossier</div>
-                </div>
-
-                <div class="team-card" onclick="openProfile('raghav')">
-                    <img src="https://i.ibb.co/s9RSDNRG/IMG-20260211-WA0060.jpg" alt="Raghav Desai" class="member-img">
-                    <h3 class="member-name">Raghav Desai</h3>
-                    <p class="member-role">Sales & Operations</p>
-                    <div class="view-profile-btn">View Dossier</div>
-                </div>
-            </div>
-        </section>
-
-        <section id="reviews">
-            <div class="section-header">
-                <span class="section-tag">Client Confidential</span>
-                <h2 class="section-title">Mission Reports</h2>
-            </div>
-            <div class="reviews-grid">
-                <div class="review-card">
-                    <i class="fa-solid fa-quote-right"></i>
-                    <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-                    <p class="review-text">"Our servers went down 3 hours before our biggest annual sale. Deadline Masters stepped in, rewrote the broken architecture, and had us live with 15 minutes to spare. Absolute lifesavers."</p>
-                    <div class="reviewer-name">V. Sharma</div>
-                    <div class="reviewer-title">Tech Startup CEO</div>
-                </div>
-                <div class="review-card">
-                    <i class="fa-solid fa-quote-right"></i>
-                    <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-                    <p class="review-text">"We discovered a massive discrepancy in our GST filings a day before the deadline. Rohit and Sahil's team audited 6 months of data overnight. Saved us from immense regulatory penalties."</p>
-                    <div class="reviewer-name">Anonymous</div>
-                    <div class="reviewer-title">Financial Director</div>
-                </div>
-                <div class="review-card">
-                    <i class="fa-solid fa-quote-right"></i>
-                    <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-                    <p class="review-text">"Needed urgent ROC compliance and a complete digital re-branding in under 48 hours. Meraj and Raghav orchestrated the entire operation seamlessly. Best B2B service in Gujarat."</p>
-                    <div class="reviewer-name">D. Patel</div>
-                    <div class="reviewer-title">Managing Director</div>
-                </div>
-            </div>
-        </section>
-
-        <section id="contact">
-            <div class="section-header">
-                <span class="section-tag">Code Red Status</span>
-                <h2 class="section-title">Initiate Rescue Protocol</h2>
-                <p style="color: #94a3b8; margin-top: 1rem;">Fill out this secure SOS briefing. Our response time is currently under 15 minutes.</p>
-            </div>
-            <div class="contact-container">
-                <form onsubmit="event.preventDefault(); alert('Secure SOS Transmitted successfully to Deadline Masters headquarters.');">
-                    <div class="form-group">
-                        <label>Corporate Entity / Name</label>
-                        <input type="text" class="form-control" required placeholder="Enter company name...">
-                    </div>
-                    <div class="form-group">
-                        <label>Secure Email</label>
-                        <input type="email" class="form-control" required placeholder="director@company.com">
-                    </div>
-                    <div class="form-group">
-                        <label>Expiring Deadline (Date/Time)</label>
-                        <input type="text" class="form-control" required placeholder="e.g., Tomorrow at 10:00 AM">
-                    </div>
-                    <div class="form-group">
-                        <label>Nature of Crisis</label>
-                        <textarea class="form-control" required placeholder="Describe the emergency..."></textarea>
-                    </div>
-                    <button type="submit" class="submit-btn">Transmit Secure Briefing</button>
-                </form>
-            </div>
-        </section>
-
-        <footer>
-            <p>&copy; 2026 Deadline Masters. Elite Corporate Execution. Strictly Confidential.</p>
-        </footer>
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-header reveal-up">
+      <span class="section-tag">Who We Are</span>
+      <h2 class="section-title">The Task Force</h2>
     </div>
+    <div class="about-grid">
+      <div class="about-copy reveal-left">
+        <p>Deadline Masters is a <strong>multidisciplinary corporate task force</strong> built around four specialists who each own a different failure point businesses run into under pressure — finance, technology, legal and operational.</p>
+        <p>We exist because deadlines don't wait for departments to coordinate. When accounting backlogs, broken digital infrastructure, unresolved contracts or stalled sales pipelines threaten a business, Deadline Masters steps in with the right specialist, fast.</p>
+        <p>Because the team is <strong>genuinely cross-disciplinary</strong> — spanning accounting, AI-assisted operations, full-stack development, legal advisory, real estate, content strategy and field sales — a single engagement can address problems that would otherwise require four separate vendors.</p>
+      </div>
+      <div class="about-stats reveal-right">
+        <div class="about-stat"><i class="fa-solid fa-scale-balanced"></i><h4>Finance & Law</h4><p>Reconciliation, taxation, corporate compliance and property law under one roof.</p></div>
+        <div class="about-stat"><i class="fa-solid fa-code"></i><h4>Technology</h4><p>Full-stack development, AI-assisted operations and UI/UX design.</p></div>
+        <div class="about-stat"><i class="fa-solid fa-bullhorn"></i><h4>Digital Strategy</h4><p>Content systems, platform strategy and audience growth.</p></div>
+        <div class="about-stat"><i class="fa-solid fa-handshake"></i><h4>Sales & Ops</h4><p>Field sales, lead generation and operational client support.</p></div>
+      </div>
+    </div>
+  </section>
 
-    <!-- Full-Screen Profile Overlay -->
-    <div id="profile-overlay">
-        <div class="overlay-nav">
-            <div class="brand-logo"><i class="fa-solid fa-file-shield" style="margin-right: 10px;"></i> SECURE DOSSIER</div>
-            <button class="back-btn" onclick="closeProfile()">
-                <i class="fa-solid fa-arrow-left"></i> Return to Base
-            </button>
+  <!-- EXPERTISE -->
+  <section id="expertise">
+    <div class="section-header reveal-up">
+      <span class="section-tag">Capabilities</span>
+      <h2 class="section-title">Areas of Expertise</h2>
+      <p class="section-sub">Every capability listed here is backed by an actual specialist on the team — not a generic service claim.</p>
+    </div>
+    <div class="expertise-grid" id="expertiseGrid"></div>
+  </section>
+
+  <!-- TEAM -->
+  <section id="team">
+    <div class="section-header reveal-up">
+      <span class="section-tag">The Masters</span>
+      <h2 class="section-title">The Elite Task Force</h2>
+      <p class="section-sub">Four specialists. One task force. Select a profile to access their complete professional dossier.</p>
+    </div>
+    <div class="team-grid" id="teamGrid"></div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="section-header reveal-up">
+      <span class="section-tag">Code Red Status</span>
+      <h2 class="section-title">Initiate Rescue Protocol</h2>
+      <p class="section-sub">Send a secure briefing describing the situation and your deadline. We'll respond through the contact details you provide.</p>
+    </div>
+    <div class="contact-container reveal-scale">
+      <form id="contactForm" novalidate>
+        <div class="form-group">
+          <label for="qName"><i class="fa-solid fa-building" style="color:var(--gold);margin-right:6px;"></i>Full Name / Company</label>
+          <input type="text" id="qName" class="form-control" placeholder="Enter your name or company">
+          <div class="field-error" id="err-qName">Please enter your name.</div>
         </div>
-        <div class="iframe-container">
-            <iframe id="profile-frame" title="Profile Details"></iframe>
+        <div class="form-group">
+          <label for="qEmail"><i class="fa-solid fa-envelope" style="color:var(--gold);margin-right:6px;"></i>Email</label>
+          <input type="email" id="qEmail" class="form-control" placeholder="you@company.com">
+          <div class="field-error" id="err-qEmail">Please enter a valid email address.</div>
         </div>
+        <div class="form-group">
+          <label for="qPhone"><i class="fa-solid fa-phone" style="color:var(--gold);margin-right:6px;"></i>Phone</label>
+          <input type="tel" id="qPhone" class="form-control" placeholder="Your mobile number">
+          <div class="field-error" id="err-qPhone">Please enter a valid phone number.</div>
+        </div>
+        <div class="form-group">
+          <label for="qSubject"><i class="fa-solid fa-flag" style="color:var(--gold);margin-right:6px;"></i>Subject</label>
+          <input type="text" id="qSubject" class="form-control" placeholder="Briefly describe the situation">
+          <div class="field-error" id="err-qSubject">Please add a subject.</div>
+        </div>
+        <div class="form-group">
+          <label for="qMessage"><i class="fa-solid fa-exclamation-triangle" style="color:var(--gold);margin-right:6px;"></i>Message / Requirement</label>
+          <textarea id="qMessage" class="form-control" placeholder="Describe the emergency and your exact deadline..."></textarea>
+          <div class="field-error" id="err-qMessage">Please describe your requirement.</div>
+        </div>
+        <button type="submit" class="submit-btn" id="submitBtn"><i class="fa-solid fa-paper-plane"></i> Transmit Secure Briefing</button>
+      </form>
+    </div>
+  </section>
+</main>
+
+<!-- PROFILE VIEW (rendered dynamically) -->
+<div id="profile-view"></div>
+
+<!-- ADMIN QUERIES VIEW -->
+<div id="admin-view">
+  <section style="padding-top:0;">
+    <div class="section-header reveal-up active" style="margin-bottom:2.5rem;">
+      <span class="section-tag" style="color:#ef4444;border-color:rgba(239,68,68,.25);background:rgba(239,68,68,.1);">Restricted Area</span>
+      <h2 class="section-title">Secure Queries</h2>
+      <p class="section-sub">Briefings transmitted through the contact form. Stored locally in this browser (see README for backend setup).</p>
     </div>
 
-    <script>
-        // Store the raw HTML for each profile
-        const profileData = {
-            rohit: `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=794">
-<title>Rohit_Desai_Aurora_Resume</title>
-<script src="https://cdn.tailwindcss.com"><\/script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <div class="stats-grid">
+      <div class="stat-card"><div class="num" id="statTotal">0</div><div class="lbl">Total Queries</div></div>
+      <div class="stat-card"><div class="num" id="statNew">0</div><div class="lbl">New</div></div>
+      <div class="stat-card"><div class="num" id="statToday">0</div><div class="lbl">Today</div></div>
+      <div class="stat-card"><div class="num" id="statReplied">0</div><div class="lbl">Replied</div></div>
+    </div>
+
+    <div class="toolbar">
+      <div class="search-box">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" class="form-control" id="qSearch" placeholder="Search name, email, phone, subject, message...">
+      </div>
+      <div class="filter-group" id="filterGroup">
+        <button class="filter-chip active" data-filter="all">All</button>
+        <button class="filter-chip" data-filter="new">New</button>
+        <button class="filter-chip" data-filter="read">Read</button>
+        <button class="filter-chip" data-filter="replied">Replied</button>
+      </div>
+      <div class="toolbar-actions">
+        <button class="icon-btn" onclick="renderAdmin()"><i class="fa-solid fa-rotate"></i> Refresh</button>
+        <button class="icon-btn" onclick="exportCSV()"><i class="fa-solid fa-file-csv"></i> Export CSV</button>
+        <button class="icon-btn" onclick="confirmClearAll()"><i class="fa-solid fa-trash"></i> Wipe All</button>
+        <button class="icon-btn" onclick="lockQueries()"><i class="fa-solid fa-lock"></i> Lock & Return</button>
+      </div>
+    </div>
+
+    <div class="query-table-wrap">
+      <table class="q-table" id="qTable">
+        <thead>
+          <tr><th>Timestamp</th><th>Client</th><th>Contact</th><th>Subject</th><th>Message</th><th>Status</th></tr>
+        </thead>
+        <tbody id="queriesTableBody"></tbody>
+      </table>
+    </div>
+  </section>
+</div>
+
+<!-- TOASTS -->
+<div id="toast-container" aria-live="polite"></div>
+
+<!-- PASSWORD GATE -->
+<div class="modal-overlay" id="gateOverlay">
+  <div class="modal-box">
+    <i class="fa-solid fa-shield-halved gate-icon"></i>
+    <h3>Restricted Area</h3>
+    <p class="sub">Enter security clearance to access the Queries dashboard.</p>
+    <div class="pwd-wrap">
+      <input type="password" class="form-control" id="gatePwd" placeholder="Security clearance" autocomplete="off">
+      <button class="pwd-toggle" onclick="togglePwd()" aria-label="Show password"><i class="fa-solid fa-eye" id="pwdEyeIcon"></i></button>
+    </div>
+    <div class="gate-error" id="gateError"></div>
+    <div class="modal-actions">
+      <button class="btn-outline" onclick="closeGate()" style="flex:1;">Cancel</button>
+      <button class="btn-gold" onclick="attemptUnlock()" style="flex:1;">Authenticate</button>
+    </div>
+  </div>
+</div>
+
+<!-- QUERY DETAIL DRAWER -->
+<div class="drawer-overlay" id="drawerOverlay" onclick="closeDrawer()"></div>
+<aside class="drawer" id="qDrawer" aria-label="Query detail">
+  <button class="drawer-close" onclick="closeDrawer()" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+  <div id="drawerContent"></div>
+</aside>
+
+<!-- FOOTER -->
+<footer id="siteFooter">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="brand-logo"><i class="fa-solid fa-bolt"></i> DEADLINE MASTERS</div>
+      <p>A multidisciplinary corporate task force covering finance, technology, law, real estate, digital strategy and sales — deployed when time collapses.</p>
+    </div>
+    <div class="footer-links">
+      <h4>Quick Links</h4>
+      <a onclick="router.go('home')">Home</a>
+      <a onclick="router.go('about')">About</a>
+      <a onclick="router.go('expertise')">Expertise</a>
+      <a onclick="router.go('team')">Team</a>
+      <a onclick="router.go('contact')">Contact</a>
+    </div>
+  </div>
+  <div class="footer-bottom">&copy; 2026 Deadline Masters. Elite Corporate Execution. Strictly Confidential.</div>
+</footer>
+
+<button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top"><i class="fa-solid fa-arrow-up"></i></button>
+
 <script>
-tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'], display: ['Outfit', 'sans-serif'], } } } }
-<\/script>
-<style>
-@keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } } 
-@keyframes blob { 0% { transform: translate(0px, 0px) scale(1); } 33% { transform: translate(30px, -50px) scale(1.1); } 66% { transform: translate(-20px, 20px) scale(0.9); } 100% { transform: translate(0px, 0px) scale(1); } }
-@keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0px); } }
-.animate-fade-in-up { animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; }
-.animate-blob { animation: blob 12s infinite alternate; }
-.animate-float { animation: float 6s ease-in-out infinite; }
-.delay-100 { animation-delay: 100ms; }
-.delay-200 { animation-delay: 200ms; }
-.delay-300 { animation-delay: 300ms; }
-.delay-400 { animation-delay: 400ms; }
-body { margin: 0; padding: 0; background: #09090b; display: flex; justify-content: center; }
-.resume-container { width: 794px; min-height: 1123px; background: #09090b; overflow: hidden; display: flex; flex-direction: column; position: relative; }
-</style>
-</head>
-<body>
-<main class="resume-container">
-<div class="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-cyan-600/20 rounded-full blur-[120px] mix-blend-screen pointer-events-none animate-blob"></div>
-<div class="absolute top-[20%] right-[-10%] w-[400px] h-[400px] bg-violet-600/20 rounded-full blur-[120px] mix-blend-screen pointer-events-none animate-blob delay-200"></div>
-<header class="flex justify-between items-center gap-6 shrink-0 z-10 pb-2 animate-fade-in-up p-8">
-<div class="flex-1 flex flex-col justify-center relative">
-<h1 class="text-5xl font-black tracking-tight uppercase font-display text-transparent bg-clip-text bg-gradient-to-r from-white via-zinc-200 to-zinc-400 mb-2 drop-shadow-sm">Rohit Desai</h1>
-<h2 class="text-[14px] text-zinc-400 font-semibold tracking-[0.2em] uppercase mb-4 flex items-center gap-2">Multi-Disciplinary Consultant</h2>
-<div class="flex flex-wrap items-center gap-5 text-[10.5px] font-medium text-zinc-400 tracking-wide">
-<span class="flex items-center gap-2 bg-white/[0.03] px-3 py-1.5 rounded-full border border-white/5">+91 9016200492</span>
-<span class="flex items-center gap-2 bg-white/[0.03] px-3 py-1.5 rounded-full border border-white/5">rohitdesai.in@gmail.com</span>
-<span class="flex items-center gap-2 bg-white/[0.03] px-3 py-1.5 rounded-full border border-white/5">Ahmedabad, India</span>
-</div></div>
-<div class="w-[120px] h-[120px] rounded-2xl p-1 bg-gradient-to-br from-cyan-500 via-violet-500 to-fuchsia-500 shrink-0 shadow-[0_0_30px_-5px_rgba(139,92,246,0.4)] animate-float rotate-3"><img class="w-full h-full object-cover object-top rounded-xl border-4 border-[#09090b]" src="https://i.ibb.co/xtssQYJw/IMG-20260816-WA0001.jpg"></div>
-</header>
-<section class="bg-white/[0.02] border border-white/10 rounded-2xl p-6 relative overflow-hidden shrink-0 shadow-lg z-10 backdrop-blur-xl animate-fade-in-up delay-100 mx-8">
-<p class="text-[11.5px] text-zinc-300 leading-[1.7] text-justify relative z-10">A dynamic and highly versatile professional bridging the gap between Finance, Technology, Law, and Real Estate. With 5 years of rigorous experience in advanced accounting and taxation, coupled with full-stack development, UI/UX design, and legal advisory, I offer an unparalleled, 360-degree approach to business growth.</p>
-</section>
-<div class="grid grid-cols-2 gap-5 shrink-0 z-10 animate-fade-in-up delay-200 p-8">
-<div class="bg-white/[0.02] border border-white/10 rounded-2xl p-5"><h3 class="text-[13px] font-bold text-emerald-400 uppercase tracking-widest font-display mb-3">Accounting & Finance</h3><ul class="space-y-2.5 text-[10.5px] text-zinc-400 leading-relaxed"><li><strong class="text-zinc-200">Strategic Finance:</strong> Modeling, Corp Budgeting</li><li><strong class="text-zinc-200">Taxation & Audits:</strong> GST, TDS/TCS, ITR</li></ul></div>
-<div class="bg-white/[0.02] border border-white/10 rounded-2xl p-5"><h3 class="text-[13px] font-bold text-cyan-400 uppercase tracking-widest font-display mb-3">App/Web Dev & UI/UX</h3><ul class="space-y-2.5 text-[10.5px] text-zinc-400 leading-relaxed"><li><strong class="text-zinc-200">Software Eng:</strong> Full-Stack Web, Cross-Platform</li><li><strong class="text-zinc-200">Tech Stack:</strong> MERN, Flutter, AWS</li></ul></div>
-<div class="bg-white/[0.02] border border-white/10 rounded-2xl p-5"><h3 class="text-[13px] font-bold text-violet-400 uppercase tracking-widest font-display mb-3">Legal Practice</h3><ul class="space-y-2.5 text-[10.5px] text-zinc-400 leading-relaxed"><li><strong class="text-zinc-200">Drafting & Vetting:</strong> NDAs, Vendor Contracts</li><li><strong class="text-zinc-200">Corporate Compliance:</strong> Pvt Ltd/LLP Incorporation</li></ul></div>
-<div class="bg-white/[0.02] border border-white/10 rounded-2xl p-5"><h3 class="text-[13px] font-bold text-fuchsia-400 uppercase tracking-widest font-display mb-3">Real Estate & Dealings</h3><ul class="space-y-2.5 text-[10.5px] text-zinc-400 leading-relaxed"><li><strong class="text-zinc-200">Land Acquisition:</strong> Agri to NA Conversion</li><li><strong class="text-zinc-200">Deal Structuring:</strong> High-value negotiations</li></ul></div>
-</div>
-</main>
-</body>
-</html>`,
+/* =========================================================
+   PROFILE DATA — SOURCE OF TRUTH
+   Only information present in the supplied resumes is included.
+   Missing fields are intentionally omitted or marked "Confidential" /
+   "Information to be updated" rather than invented.
+========================================================= */
+const profileDB = {
+  "sahil-desai": {
+    name: "Sahil Desai",
+    slug: "sahil-desai",
+    role: "Finance & AI Operations Professional",
+    initials: "SD",
+    img: "https://i.ibb.co/xtsDN4N2/file-0000000037a4821198b450c135eda404-1.png",
+    tagline: "Detail-oriented finance professional blending analytical rigor with applied AI to make financial operations faster and more accurate.",
+    bio: "Detail-oriented finance professional with a strong foundation in financial reporting, reconciliation, and business operations, complemented by hands-on proficiency in basic coding and applied AI tools. Combines analytical rigor with a tech-enabled approach to streamline workflows, automate repetitive tasks, and generate digital content that supports faster, smarter decision-making. Known for quickly adopting emerging tools to improve accuracy, efficiency, and output quality across financial and operational functions.",
+    location: "Kadi City, India",
+    email: "sahildesai.in@gmail.com",
+    phone: "+91 6353778543",
+    linkedin: "https://linkedin.com/in/sahildesai1",
+    experience: [
+      {
+        title: "Finance & Operations Associate",
+        org: "JAMD",
+        period: "2025 – Present",
+        points: [
+          "Reconciled over 45 accounts monthly and maintained accurate financial records using Microsoft Excel, achieving a 15% reduction in reporting errors for internal stakeholders.",
+          "Managed and tracked a budget of ₹15,00,000, proactively flagging expenditure variances against forecasts to improve financial decision-making and forecasting accuracy by 20%.",
+          "Leveraged AI tools and prompt engineering to automate data summarization and draft internal communications, reducing turnaround time on recurring reporting tasks by 12 hours per week.",
+          "Applied HTML/CSS to support the deployment and maintenance of 3 internal web-based tools, bridging finance operations and technical execution to streamline department workflows."
+        ]
+      },
+      {
+        title: "Academic Intern",
+        org: "Scienext India Private Limited",
+        period: "2023",
+        points: [
+          "Drafted 4 comprehensive organizational reports and documented standard operating procedures (SOPs), streamlining corporate workflows for a team of 15.",
+          "Organized and maintained 12 operational data sets, improving data retrieval speeds by 30% and ensuring rigorous reporting accuracy for the team."
+        ]
+      }
+    ],
+    education: [
+      { degree: "Master of Design (M.Des) in UI/UX Design", school: "Gujarat University - School of Design, Vadodara", period: "2023" },
+      { degree: "Master of Visual Arts (MVA) in Applied Arts", school: "The Maharaja Sayajirao University of Baroda", period: "June 2023" },
+      { degree: "Bachelor of Arts (B.A.)", school: "CNBD Arts & Commerce College, Kadi", period: "2022" }
+    ],
+    training: [
+      { title: "Web Development Fundamentals", period: "2024", desc: "Self-directed training in HTML/CSS and basic web application deployment to build cross-functional technical literacy." },
+      { title: "AI & Automation", period: "2024", desc: "Hands-on, applied learning in prompt engineering and AI-based image/video generation, used to improve content creation and task efficiency." }
+    ],
+    skills: {
+      "Financial & Data Management": ["Financial Reporting", "Account Reconciliation", "High-volume Data Entry", "Data Verification", "Record Keeping"],
+      "Technical & Software": ["Microsoft Office Suite", "Google Workspace", "Low-code Platforms", "Web App Deployment", "Prompt Engineering", "30+ WPM Typing"],
+      "Soft Skills": ["Attention to Detail", "Analytical Thinking", "Time Management", "Confidentiality", "Adaptability"]
+    },
+    expertise: ["Financial Reporting & Reconciliation", "Budget Tracking & Forecasting", "AI-Assisted Operations", "Web App Deployment (HTML/CSS)"],
+    languages: ["English (Professional Proficiency)", "Gujarati (Native)", "Hindi (Fluent)"]
+  },
 
-            raghav: `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=794">
-<title>Raghav_Desai_Resume</title>
-<script src="https://cdn.tailwindcss.com"><\/script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<script>tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'], display: ['Outfit', 'sans-serif'], } } } }<\/script>
-<style>body { margin: 0; padding: 0; background: #020617; display: flex; justify-content: center; } .resume-container { width: 794px; min-height: 1123px; background: #020617; overflow: hidden; display: flex; flex-direction: column; position: relative; }</style>
-</head>
-<body>
-<main class="resume-container"> 
-<div class="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] rounded-full bg-blue-600/20 blur-[120px] pointer-events-none"></div>
-<header class="relative z-10 px-10 py-10 flex items-center justify-between border-b border-white/10 bg-white/[0.02] backdrop-blur-sm shrink-0">
-<div class="flex-1 pr-6">
-<h1 class="text-5xl font-extrabold tracking-tight mb-2 uppercase font-display text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-rose-400">Raghav Desai</h1>
-<h2 class="text-[17px] text-slate-300 font-medium tracking-widest uppercase mt-2">Driven Sales & Operations Professional</h2>
-</div>
-<div class="w-36 h-36 rounded-full p-1 bg-gradient-to-tr from-blue-500 via-purple-500 to-rose-400 shrink-0"><img class="w-full h-full object-cover object-top rounded-full border-4 border-[#020617]" src="https://i.ibb.co/s9RSDNRG/IMG-20260211-WA0060.jpg"></div>
-</header>
-<div class="px-10 py-3 flex justify-between items-center text-[11px] font-semibold tracking-wider uppercase shrink-0 shadow-md z-10 relative bg-gradient-to-r from-blue-900/30 via-purple-900/30 to-rose-900/30 border-b border-white/10 text-slate-200">
-<span>+91 7096561925</span><span>raghavdesai.in@gmail.com</span><span>Ahmedabad, Gujarat</span>
-</div>
-<div class="flex flex-1 overflow-hidden relative z-10">
-<div class="w-[58%] p-8 pt-10 flex flex-col gap-8">
-<section><h3 class="text-lg font-bold text-slate-100 border-b border-white/10 pb-2 mb-4 uppercase tracking-wider font-display">Professional Summary</h3><p class="text-[12px] text-slate-400 leading-relaxed text-justify font-medium">A highly motivated and results-driven sales professional with a proven track record in field sales, lead generation, and operational client support. I combine strong communication skills with analytical thinking to identify market opportunities and consistently deliver results.</p></section>
-<section><h3 class="text-lg font-bold text-slate-100 border-b border-white/10 pb-2 mb-6 uppercase tracking-wider font-display">Experience</h3>
-<div class="mb-4"><h4 class="text-[15px] font-bold text-slate-100 uppercase">One Touch Solution Pvt Ltd</h4><p class="text-xs text-purple-300">Sales & Operations Executive</p><ul class="mt-2 text-[11.5px] text-slate-400 list-disc pl-4"><li>Managed the end-to-end issuance and activation of FASTags.</li><li>Conducted extensive outbound calling and ground-level marketing.</li></ul></div>
-<div><h4 class="text-[15px] font-bold text-slate-100 uppercase">Reera Dermatology Lab Pvt Ltd</h4><p class="text-xs text-slate-300">Field Sales Executive</p><ul class="mt-2 text-[11.5px] text-slate-400 list-disc pl-4"><li>Conducted daily field visits to local clinics and dermatologists.</li></ul></div>
-</section>
-</div>
-<div class="w-[42%] bg-white/[0.02] border-l border-white/10 p-8 pt-10 flex flex-col gap-8">
-<section><h3 class="text-lg font-bold text-slate-100 border-b border-white/10 pb-2 mb-6 uppercase tracking-wider font-display">Core Expertise</h3>
-<div class="mb-6"><h4 class="text-xs font-bold text-slate-200 uppercase tracking-widest mb-2">Sales & Biz Dev</h4><p class="text-[11px] text-slate-400">Target Achievement, Lead Gen, Field Marketing</p></div>
-<div class="mb-6"><h4 class="text-xs font-bold text-slate-200 uppercase tracking-widest mb-2">Tech & Operations</h4><p class="text-[11px] text-slate-400">Data Analysis, MS Excel, Fastag Operations</p></div>
-</section>
-</div>
-</div>
-</main>
-</body>
-</html>`,
+  "rohit-desai": {
+    name: "Rohit Desai",
+    slug: "rohit-desai",
+    role: "Multi-Disciplinary Consultant",
+    initials: "RD",
+    img: "https://i.ibb.co/xtssQYJw/IMG-20260816-WA0001.jpg",
+    tagline: "A 360-degree professional bridging Finance, Technology, Law and Real Estate.",
+    bio: "A dynamic and highly versatile professional bridging the gap between Finance, Technology, Law, and Real Estate. With 5 years of rigorous experience in advanced accounting and taxation, coupled with full-stack development, UI/UX design, and legal advisory, Rohit offers an unparalleled, 360-degree approach to business growth. As a practicing legal consultant and high-value real estate dealer, he navigates complex property acquisitions, ensures strict regulatory compliance, and builds the digital infrastructure to scale modern enterprises.",
+    location: "Ahmedabad, India",
+    email: "rohitdesai.in@gmail.com",
+    phone: "+91 9016200492",
+    experience: [
+      { title: "Principal Consultant", org: "Independent Practice", period: "", points: ["Represented HNWIs in land acquisition and registry.", "Drafted 100+ binding commercial contracts."] },
+      { title: "Senior Accountant", org: "Corporate Clients", period: "", points: ["Managed finances for SMEs, saving an average of 15% in tax.", "Led the transition to automated SAP & Tally Prime."] },
+      { title: "Lead Full-Stack Developer", org: "Freelance", period: "", points: ["Deployed cross-platform mobile apps in Flutter.", "Created landing pages increasing retention by over 40%."] }
+    ],
+    education: [
+      { degree: "Bachelor of Laws (LLB)", school: "Focus on Corporate Law, Property Law, and Contract Act", period: "" },
+      { degree: "Bachelor of Commerce (B.Com)", school: "Gujarat Commerce College, Ahmedabad — Advanced Accountancy, Financial Management, Economics", period: "" }
+    ],
+    certifications: [
+      { title: "Certified GST Practitioner", group: "Finance & Accounting" },
+      { title: "NISM Series-XV: Analyst", group: "Finance & Accounting" },
+      { title: "Advanced Diploma in Financial Accounting (ADFA)", group: "Finance & Accounting" },
+      { title: "Tally PRO Certified", group: "Finance & Accounting" },
+      { title: "AWS Certified Developer", group: "Tech & Design" },
+      { title: "Meta Front-End Developer", group: "Tech & Design" },
+      { title: "Google UX Design Professional", group: "Tech & Design" },
+      { title: "Bar Council of India (BCI)", group: "Law & Real Estate" },
+      { title: "Gujarat RERA Registered Agent", group: "Law & Real Estate" },
+      { title: "Certified Real Estate Consultant", group: "Law & Real Estate" }
+    ],
+    skills: {
+      "Accounting & Finance": ["Strategic Finance (Modeling, Corp Budgeting, ROI, Risk Mgmt)", "Taxation & Audits (GST, TDS/TCS, ITR 1-7, Corp Tax Planning)", "Bookkeeping (Balance Sheets, Cash Flow, P&L, AP/AR)", "Tally Prime", "SAP FICO", "QuickBooks", "Zoho Books"],
+      "App/Web Dev & UI/UX": ["Full-Stack Web & Cross-Platform Mobile", "APIs", "MERN Stack", "Flutter", "AWS", "UI/UX Wireframing & User Flows", "Figma", "Adobe XD", "Photoshop", "Illustrator"],
+      "Legal Practice": ["Drafting & Vetting NDAs, Partnership Deeds, Vendor Contracts, Leases", "Corporate Compliance (Pvt Ltd/LLP Incorporation, IP Filing, MCA)", "Property Law (Title Search, Due Diligence, RERA)"],
+      "Real Estate & Dealings": ["Land Acquisition (Agri to NA Conversion, Zoning, Bulk Aggregation)", "Deal Structuring & High-Value Negotiations", "Escrow & Investor Portfolio", "Property Valuation & Feasibility Studies"]
+    },
+    expertise: ["Strategic Finance & Taxation", "Full-Stack Development & UI/UX", "Legal Drafting & Corporate Compliance", "Real Estate & Land Acquisition"]
+  },
 
-            meraj: `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=794">
-<title>Meraj_Desai_Resume</title>
-<script src="https://cdn.tailwindcss.com"><\/script>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<script>tailwind.config = { theme: { extend: { fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'], display: ['Outfit', 'sans-serif'], } } } }<\/script>
-<style>body { margin: 0; padding: 0; background: #f4f4f5; display: flex; justify-content: center; } .resume-container { width: 794px; min-height: 1123px; background: white; overflow: hidden; display: flex; }</style>
-</head>
-<body>
-<main class="resume-container">
-<div class="w-[35%] bg-zinc-900 text-zinc-100 flex flex-col pt-12 pb-8 px-8 relative overflow-hidden">
-<div class="relative z-10 mb-8 flex flex-col items-center">
-<div class="w-40 h-40 rounded-2xl overflow-hidden border-4 border-zinc-800 shadow-xl mb-6"><img class="w-full h-full object-cover object-top" src="https://i.ibb.co/vvHQ29Zr/IMG-20260816-WA0035.jpg"></div>
-<h1 class="text-3xl font-extrabold tracking-tight text-white font-display uppercase text-center leading-none">MERAJ<br>DESAI</h1>
-</div>
-<div class="relative z-10 flex flex-col gap-3 text-xs font-medium text-zinc-400 border-b border-zinc-800 pb-6 mb-6">
-<span>merajdesai.in@gmail.com</span><span>Ahmedabad, Gujarat</span><span>English, Hindi, Gujarati</span><span>Undergrad & Creator</span>
-</div>
-<section class="relative z-10 mb-8"><h3 class="text-sm font-bold text-white uppercase tracking-widest mb-3 font-display">Profile</h3><p class="text-[11px] text-zinc-400 leading-relaxed text-justify">By day, an ambitious undergraduate student navigating Ahmedabad's cultural landscape. By night, a full-stack digital creator, actor, and social media strategist bridging the gap between technical execution and raw human storytelling.</p></section>
-<section class="relative z-10 flex-1"><h3 class="text-sm font-bold text-white uppercase tracking-widest mb-4 font-display">Tech Maestro</h3>
-<div class="mb-5"><h4 class="text-[10px] font-bold text-zinc-200 mb-2 uppercase tracking-widest border-b border-zinc-800 pb-1">Video & Audio</h4><p class="text-[10px] text-zinc-400">Premiere Pro, After Effects, DaVinci, CapCut</p></div>
-<div><h4 class="text-[10px] font-bold text-zinc-200 mb-2 uppercase tracking-widest border-b border-zinc-800 pb-1">Design & AI</h4><p class="text-[10px] text-zinc-400">Photoshop, Illustrator, Canva, Midjourney</p></div>
-</section>
-</div>
-<div class="w-[65%] bg-white flex flex-col relative">
-<div class="pt-14 px-10 pb-8 border-b border-zinc-100 bg-zinc-50/50">
-<h2 class="text-xl text-zinc-800 font-semibold tracking-wide uppercase mb-3 font-display">The Architect of Digital Attention</h2>
-<p class="text-sm text-zinc-500 font-display italic font-medium tracking-wide border-l-4 border-zinc-800 pl-4 py-1">"I don't just scroll through trends; I create them."</p>
-</div>
-<div class="flex-1 px-10 py-8 flex flex-col gap-8">
-<section><h3 class="text-lg font-bold text-zinc-900 tracking-tight mb-4 font-display uppercase">Front of the Camera</h3>
-<div class="space-y-4"><h4 class="text-sm font-bold text-zinc-800 mb-1">On-Camera Presence</h4><p class="text-[12px] text-zinc-600 leading-relaxed">Versatile acting range spanning high-energy comedic skits to deep educational content.</p></div>
-</section>
-<section><h3 class="text-lg font-bold text-zinc-900 tracking-tight mb-4 font-display uppercase border-t border-zinc-100 pt-8">Behind the Scenes</h3>
-<div class="grid grid-cols-2 gap-4">
-<div class="bg-zinc-50 p-4 rounded-xl border border-zinc-100"><h4 class="text-xs font-bold text-zinc-800 mb-1.5 uppercase">Strategy & Planning</h4><p class="text-[11px] text-zinc-600">30-to-90-day content calendars, competitor analysis.</p></div>
-<div class="bg-zinc-50 p-4 rounded-xl border border-zinc-100"><h4 class="text-xs font-bold text-zinc-800 mb-1.5 uppercase">Analytics & Growth</h4><p class="text-[11px] text-zinc-600">Data-driven pivoting using Meta Suite.</p></div>
-</div>
-</section>
-</div></div>
-</main>
-</body>
-</html>`,
+  "meraj-desai": {
+    name: "Meraj Desai",
+    slug: "meraj-desai",
+    role: "Digital Strategy & Creator",
+    initials: "MD",
+    img: "https://i.ibb.co/vvHQ29Zr/IMG-20260816-WA0035.jpg",
+    tagline: "\"I don't just scroll through trends; I create them.\" The Architect of Digital Attention.",
+    bio: "By day, an ambitious undergraduate student navigating Ahmedabad's cultural landscape. By night, a full-stack digital creator, actor, and social media strategist bridging the gap between technical execution and raw human storytelling. Meraj blends Gen-Z cultural awareness with hardcore professional expertise across on-camera presence, short-form content strategy, and platform growth.",
+    location: "Ahmedabad, Gujarat",
+    email: "merajdesai.in@gmail.com",
+    phone: null,
+    experience: [
+      { title: "On-Camera Presence", org: "Front of the Camera", period: "", points: ["Versatile acting range spanning high-energy comedic skits to deep educational content.", "Mastery of lighting, camera angles, and vital lens connection to hold viewer attention."] },
+      { title: "The Art of the Reel", org: "Front of the Camera", period: "", points: ["3-Second Hook: stopping doom-scrolls with visual pattern interrupts.", "Pacing: optimal script editing for maximum retention and watch time.", "CTAs: seamlessly driving genuine engagement and shares."] },
+      { title: "Platform Mastery & Strategy", org: "Behind the Scenes", period: "", points: ["Deep algorithm knowledge across Instagram, YouTube, LinkedIn, and X.", "30-to-90-day content calendars, competitor analysis, and market gap identification.", "Data-driven pivoting using Meta Suite & native insights for maximum ROI.", "Early adoption of audio trends, meme formats, and cultural moments."] },
+      { title: "Client & Community Relations", org: "The Communicator", period: "", points: ["Translating vague visions into concrete strategies, pitching ideas, and negotiating contracts with clarity.", "Engaging followers, executing crisis management, and turning casual viewers into loyal brand advocates."] }
+    ],
+    skills: {
+      "Video & Audio": ["Premiere Pro", "After Effects", "DaVinci Resolve", "CapCut Pro"],
+      "Design & AI Gen": ["Photoshop", "Illustrator", "Canva Pro", "Midjourney", "Stable Diffusion"]
+    },
+    expertise: ["On-Camera Presence & Acting", "Short-Form Content Strategy", "Platform Algorithm & Analytics", "Client & Community Management"],
+    languages: ["English", "Hindi", "Gujarati"]
+  },
 
-            sahil: `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=794">
-<title>Sahil_Desai_Resume</title>
-<script src="https://cdn.tailwindcss.com"><\/script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-<script>tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'], display: ['Outfit', 'sans-serif'], } } } }<\/script>
-<style>
-body { margin: 0; padding: 0; background: #0a0f1c; display: flex; justify-content: center; } 
-.resume-container { width: 794px; min-height: 1123px; background: #0a0f1c; overflow: hidden; display: flex; flex-direction: column; position: relative; }
-</style>
-</head>
-<body>
-<main class="resume-container">
-<div class="absolute top-[-10%] right-[-10%] w-[600px] h-[600px] bg-amber-500/10 rounded-full blur-[120px] pointer-events-none"></div>
-<header class="flex justify-between items-center p-10 border-b border-white/10 shrink-0 z-10 relative">
-<div>
-<h1 class="text-5xl font-black tracking-tight uppercase font-display text-transparent bg-clip-text bg-gradient-to-r from-amber-200 to-amber-500 mb-2">Sahil Desai</h1>
-<h2 class="text-[15px] text-zinc-300 font-semibold tracking-widest uppercase mb-4">Finance & AI Operations Professional</h2>
-<div class="flex gap-4 text-[11px] font-medium text-zinc-400">
-<span>+91 6353778543</span> | <span>sahildesai.in@gmail.com</span> | <span>Ahmedabad, India</span>
-</div>
-</div>
-<div class="w-32 h-32 rounded-full p-1 bg-gradient-to-br from-amber-400 to-orange-600 shadow-lg"><img class="w-full h-full object-cover object-top rounded-full border-4 border-[#0a0f1c]" src="https://i.ibb.co/xtsDN4N2/file-0000000037a4821198b450c135eda404-1.png"></div>
-</header>
-<section class="p-10 relative z-10">
-<p class="text-sm text-zinc-300 leading-relaxed text-justify mb-8">Detail-oriented finance professional with a strong foundation in financial reporting, reconciliation, and business operations, complemented by hands-on proficiency in basic coding and applied AI tools. Founder and owner of JAMD Shopping, leveraging no-code web development and modern operational workflows to drive e-commerce growth.</p>
-<div class="grid grid-cols-2 gap-8">
-<div>
-<h3 class="text-lg font-bold text-amber-500 uppercase tracking-widest font-display mb-4 border-b border-white/10 pb-2">Professional Experience</h3>
-<div class="mb-5">
-<h4 class="text-[14px] font-bold text-zinc-100 uppercase">JAMD Shopping</h4>
-<p class="text-xs text-amber-400 mb-2">Founder & Operations Lead</p>
-<ul class="text-xs text-zinc-400 list-disc pl-4 space-y-1.5">
-<li>Reconciled over 45 accounts monthly and maintained accurate financial records.</li>
-<li>Managed and tracked a budget of ₹15,00,000, proactively flagging expenditure variances.</li>
-<li>Leveraged AI tools and prompt engineering to automate data summarization.</li>
-</ul>
-</div>
-<div>
-<h4 class="text-[14px] font-bold text-zinc-100 uppercase">ONE TUCH SOLUTION</h4>
-<p class="text-xs text-amber-400 mb-2">Finance Executive</p>
-<ul class="text-xs text-zinc-400 list-disc pl-4 space-y-1.5">
-<li>Drafted comprehensive organizational reports and streamlined workflows.</li>
-<li>Applied HTML/CSS to support the deployment and maintenance of internal web tools.</li>
-</ul>
-</div>
-</div>
-<div>
-<h3 class="text-lg font-bold text-amber-500 uppercase tracking-widest font-display mb-4 border-b border-white/10 pb-2">Education & Training</h3>
-<div class="mb-4">
-<h4 class="text-[14px] font-bold text-zinc-100 uppercase">Bachelor of Commerce (B.Com)</h4>
-<p class="text-xs text-amber-400">Gujarat Commerce College, Ahmedabad</p>
-</div>
-<h3 class="text-lg font-bold text-amber-500 uppercase tracking-widest font-display mb-4 border-b border-white/10 pb-2 mt-8">Core Skills</h3>
-<div class="flex flex-wrap gap-2 text-xs">
-<span class="px-3 py-1 bg-white/5 border border-white/10 rounded text-zinc-300">Financial Reporting</span>
-<span class="px-3 py-1 bg-white/5 border border-white/10 rounded text-zinc-300">AI Prompt Engineering</span>
-<span class="px-3 py-1 bg-white/5 border border-white/10 rounded text-zinc-300">No-Code Development</span>
-<span class="px-3 py-1 bg-white/5 border border-white/10 rounded text-zinc-300">E-Commerce Management</span>
-</div>
-</div>
-</div>
-</section>
-</main>
-</body>
-</html>`
-        };
+  "raghav-desai": {
+    name: "Raghav Desai",
+    slug: "raghav-desai",
+    role: "Sales & Operations Professional",
+    initials: "RG",
+    img: "https://i.ibb.co/s9RSDNRG/IMG-20260211-WA0060.jpg",
+    tagline: "\"I am not just someone who makes calls; I am a closer.\"",
+    bio: "A highly motivated and results-driven sales professional with a proven track record in field sales, lead generation, and operational client support. With close to a year of specialized experience in the FASTag industry and foundational experience in pharmaceutical/dermatology field sales, Raghav excels in fast-paced environments where hitting targets and solving customer problems are the top priorities — combining strong communication with analytical thinking to identify market opportunities and consistently deliver results.",
+    location: "Ahmedabad, Gujarat, India",
+    email: "raghavdesai.in@gmail.com",
+    phone: "+91 7096561925",
+    experience: [
+      {
+        title: "Sales & Operations Executive", org: "One Touch Solution Pvt Ltd (FASTag Company)", period: "Approx. 1 Year",
+        points: [
+          "Core Operations: managed the end-to-end issuance and activation of FASTags for commercial and private vehicle owners.",
+          "Customer Acquisition: conducted extensive outbound calling and ground-level marketing, onboarding hundreds of new users.",
+          "Issue Resolution: primary point of contact for troubleshooting KYC rejections, blacklist issues, and incorrect toll deductions.",
+          "Data Management: maintained accurate daily logs of leads generated, tags activated, and revenue collected using MS Excel."
+        ]
+      },
+      {
+        title: "Field Sales Executive", org: "Reera Dermatology Lab Pvt Ltd", period: "1 Month",
+        points: [
+          "Market Penetration: conducted daily field visits to local clinics, dermatologists, and pharmacies to introduce new dermatological product lines.",
+          "Pitching & Explanation: leveraged strong communication skills to explain product formulations, benefits, and competitive advantages to medical professionals.",
+          "Target Orientation: adapted quickly to the rigorous demands of pharmaceutical sales, focusing on rapid lead generation and territory mapping."
+        ]
+      }
+    ],
+    education: [
+      { degree: "Bachelor of Commerce (B.Com)", school: "Gujarat Commerce College, Ahmedabad — business administration, financial principles, and market economics", period: "" }
+    ],
+    skills: {
+      "Sales & Business Development": ["Target Achievement", "Lead Generation (B2B/B2C)", "Field Marketing & Direct Pitching"],
+      "Tech & Operations": ["FASTag Operations (Issuance, Wallet Mgmt, Troubleshooting)", "Data Analysis", "MS Excel Proficiency"],
+      "Communication": ["Clear Articulation of Technical Details", "Problem Solving"]
+    },
+    expertise: ["Field Sales & Lead Generation", "FASTag Operations", "Client Issue Resolution", "Sales Data Management"],
+    languages: ["Gujarati (Proficient)", "Hindi (Proficient)", "English (Working Knowledge)"]
+  }
+};
 
-        function openProfile(id) {
-            document.getElementById('main-view').style.opacity = '0';
-            setTimeout(() => {
-                document.getElementById('main-view').style.display = 'none';
-                const overlay = document.getElementById('profile-overlay');
-                overlay.classList.add('active');
-                
-                const iframe = document.getElementById('profile-frame');
-                const doc = iframe.contentWindow.document;
-                doc.open();
-                doc.write(profileData[id]);
-                doc.close();
-            }, 300);
-        }
+const teamOrder = ["rohit-desai","sahil-desai","meraj-desai","raghav-desai"];
 
-        function closeProfile() {
-            const overlay = document.getElementById('profile-overlay');
-            overlay.classList.remove('active');
-            
-            setTimeout(() => {
-                const iframe = document.getElementById('profile-frame');
-                const doc = iframe.contentWindow.document;
-                doc.open();
-                doc.write('');
-                doc.close();
+/* Expertise section data — derived only from what's supported above */
+const expertiseCategories = [
+  { icon: "fa-solid fa-chart-line", title: "Finance & Accounting", desc: "Financial reporting, reconciliation, budgeting, GST/TDS taxation, and strategic financial modeling." },
+  { icon: "fa-solid fa-robot", title: "AI & Technology", desc: "Prompt engineering, AI-assisted operations, full-stack web/mobile development, and UI/UX design." },
+  { icon: "fa-solid fa-gavel", title: "Legal & Compliance", desc: "Contract drafting, corporate compliance, IP filing, and property law advisory." },
+  { icon: "fa-solid fa-house-chimney", title: "Real Estate", desc: "Land acquisition, deal structuring, RERA compliance, and property valuation." },
+  { icon: "fa-solid fa-video", title: "Digital Strategy & Content", desc: "Short-form video strategy, platform algorithm insight, and content calendar planning." },
+  { icon: "fa-solid fa-handshake", title: "Sales & Operations", desc: "Field sales, lead generation, client onboarding, and operational issue resolution." }
+];
 
-                const mainView = document.getElementById('main-view');
-                mainView.style.display = 'block';
-                setTimeout(() => {
-                    mainView.style.opacity = '1';
-                }, 50);
-            }, 600);
-        }
-    </script>
+/* =========================================================
+   UTILITIES
+========================================================= */
+function escapeHTML(str){
+  if(str === null || str === undefined) return "";
+  return String(str).replace(/[&<>"']/g, s => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[s]));
+}
+function slugName(slug){
+  return profileDB[slug] ? profileDB[slug].name : slug;
+}
+
+/* =========================================================
+   PRELOADER
+========================================================= */
+window.addEventListener("load", () => {
+  setTimeout(() => document.getElementById("preloader").classList.add("hide"), 500);
+});
+
+/* =========================================================
+   SIDEBAR
+========================================================= */
+function toggleSidebar(){
+  const sb = document.getElementById("sidebar");
+  const ov = document.getElementById("sidebarOverlay");
+  const btn = document.getElementById("hamburgerBtn");
+  const active = sb.classList.toggle("active");
+  ov.classList.toggle("active", active);
+  btn.classList.toggle("active", active);
+  btn.setAttribute("aria-expanded", active ? "true":"false");
+}
+document.addEventListener("keydown", e => {
+  if(e.key === "Escape"){
+    document.getElementById("sidebar").classList.remove("active");
+    document.getElementById("sidebarOverlay").classList.remove("active");
+    document.getElementById("hamburgerBtn").classList.remove("active");
+    closeGate();
+    closeDrawer();
+  }
+});
+
+/* =========================================================
+   NAV SCROLL STATE + BACK TO TOP + MOUSE GLOW
+========================================================= */
+window.addEventListener("scroll", () => {
+  document.getElementById("mainNav").classList.toggle("scrolled", window.scrollY > 40);
+  document.getElementById("backToTop").classList.toggle("show", window.scrollY > 500);
+});
+window.addEventListener("mousemove", e => {
+  const g = document.getElementById("glowFollow");
+  g.style.transform = `translate(${e.clientX - 210}px, ${e.clientY - 210}px)`;
+});
+document.querySelectorAll(".expertise-card").forEach; // placeholder (cards built dynamically below)
+
+/* =========================================================
+   RENDER: EXPERTISE
+========================================================= */
+function renderExpertise(){
+  const grid = document.getElementById("expertiseGrid");
+  grid.innerHTML = expertiseCategories.map((c,i) => `
+    <div class="expertise-card reveal-scale" style="transition-delay:${i*0.05}s" onmousemove="cardGlow(event,this)">
+      <i class="${c.icon}"></i>
+      <h3>${escapeHTML(c.title)}</h3>
+      <p>${escapeHTML(c.desc)}</p>
+    </div>`).join("");
+  observeReveals();
+}
+function cardGlow(e, el){
+  const rect = el.getBoundingClientRect();
+  el.style.setProperty("--mx", (e.clientX - rect.left) + "px");
+  el.style.setProperty("--my", (e.clientY - rect.top) + "px");
+}
+
+/* =========================================================
+   RENDER: TEAM
+========================================================= */
+function renderTeam(){
+  const grid = document.getElementById("teamGrid");
+  const anims = ["reveal-left","reveal-up","reveal-up","reveal-right"];
+  grid.innerHTML = teamOrder.map((slug,i) => {
+    const p = profileDB[slug];
+    const chips = (p.expertise || []).slice(0,2).map(t => `<span class="chip">${escapeHTML(t)}</span>`).join("");
+    return `
+    <div class="team-card ${anims[i]}" style="transition-delay:${i*0.08}s" onclick="router.go('profile/'+'${slug}')" tabindex="0"
+         onkeydown="if(event.key==='Enter')router.go('profile/'+'${slug}')" role="button" aria-label="View ${escapeHTML(p.name)}'s profile">
+      <div class="member-img-wrap">
+        <img src="${escapeHTML(p.img)}" alt="${escapeHTML(p.name)}" class="member-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+        <div class="member-fallback">${escapeHTML(p.initials)}</div>
+      </div>
+      <h3 class="member-name">${escapeHTML(p.name)}</h3>
+      <p class="member-role">${escapeHTML(p.role)}</p>
+      <p class="member-desc">${escapeHTML(p.tagline)}</p>
+      <div class="chip-row">${chips}</div>
+      <div class="view-profile-btn">Access Dossier</div>
+    </div>`;
+  }).join("");
+  observeReveals();
+}
+
+/* =========================================================
+   RENDER: PROFILE PAGE
+========================================================= */
+function renderProfile(slug){
+  const view = document.getElementById("profile-view");
+  const p = profileDB[slug];
+
+  if(!p){
+    view.innerHTML = `
+    <div class="not-found">
+      <i class="fa-solid fa-triangle-exclamation"></i>
+      <h1>Profile Not Found</h1>
+      <p>The dossier you're looking for doesn't exist or may have been reassigned.</p>
+      <a class="btn-gold" onclick="router.go('team')">Return to Team</a>
+    </div>`;
+    document.title = "Profile Not Found | Deadline Masters";
+    return;
+  }
+
+  document.title = `${p.name} | Deadline Masters`;
+  const metaDesc = document.querySelector('meta[name="description"]');
+  if(metaDesc) metaDesc.setAttribute("content", `${p.name} — ${p.role} at Deadline Masters.`);
+
+  const expList = (p.experience||[]).map(e => `
+    <li>
+      <h4>${escapeHTML(e.title)}${e.org ? " · " + escapeHTML(e.org) : ""}</h4>
+      ${e.period ? `<div class="t-meta">${escapeHTML(e.period)}</div>` : ""}
+      ${e.points && e.points.length ? `<ul>${e.points.map(pt=>`<li>${escapeHTML(pt)}</li>`).join("")}</ul>` : ""}
+    </li>`).join("");
+
+  const eduList = (p.education||[]).map(ed => `
+    <div class="edu-card">
+      <h4>${escapeHTML(ed.degree)}</h4>
+      ${ed.school ? `<div class="meta">${escapeHTML(ed.school)}</div>` : ""}
+      ${ed.period ? `<p>${escapeHTML(ed.period)}</p>` : ""}
+    </div>`).join("") || "";
+
+  const certList = (p.certifications||[]).map(c => `
+    <div class="cert-card"><h4>${escapeHTML(c.title)}</h4>${c.group ? `<div class="meta">${escapeHTML(c.group)}</div>` : ""}</div>`).join("") || "";
+
+  const trainingList = (p.training||[]).map(t => `
+    <div class="cert-card"><h4>${escapeHTML(t.title)}</h4><div class="meta">${escapeHTML(t.period)}</div><p>${escapeHTML(t.desc)}</p></div>`).join("") || "";
+
+  const skillGroups = Object.entries(p.skills||{}).map(([group, items]) => `
+    <div class="skill-group">
+      <h4>${escapeHTML(group)}</h4>
+      <div class="skill-tags">${items.map(s=>`<span class="skill-tag">${escapeHTML(s)}</span>`).join("")}</div>
+    </div>`).join("");
+
+  const expertiseTags = (p.expertise||[]).map(t => `<span><i class="fa-solid fa-circle"></i>${escapeHTML(t)}</span>`).join("");
+
+  const contactActions = `
+    <a href="mailto:${encodeURIComponent(p.email)}"><i class="fa-solid fa-envelope"></i> ${escapeHTML(p.email)}</a>
+    ${p.phone ? `<a href="tel:${escapeHTML(p.phone.replace(/\\s+/g,''))}"><i class="fa-solid fa-phone"></i> ${escapeHTML(p.phone)}</a>` : `<div class="conf"><i class="fa-solid fa-phone"></i> Confidential</div>`}
+    ${p.linkedin ? `<a href="${escapeHTML(p.linkedin)}" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin"></i> LinkedIn Profile</a>` : ""}
+    <div class="conf"><i class="fa-solid fa-location-dot"></i> ${escapeHTML(p.location)}</div>
+  `;
+
+  const quickInfo = `
+    <div class="info-pill"><i class="fa-solid fa-location-dot"></i> ${escapeHTML(p.location)}</div>
+    <a class="info-pill link" href="mailto:${encodeURIComponent(p.email)}"><i class="fa-solid fa-envelope"></i> ${escapeHTML(p.email)}</a>
+    ${p.phone ? `<a class="info-pill link" href="tel:${escapeHTML(p.phone.replace(/\\s+/g,''))}"><i class="fa-solid fa-phone"></i> ${escapeHTML(p.phone)}</a>` : `<div class="info-pill"><i class="fa-solid fa-phone"></i> Confidential</div>`}
+    <div class="info-pill"><i class="fa-solid fa-briefcase"></i> ${escapeHTML(p.role)}</div>
+  `;
+
+  const languagesBlock = (p.languages && p.languages.length) ? `
+    <div class="sidebar-block">
+      <h3>Languages</h3>
+      <div class="skill-tags">${p.languages.map(l=>`<span class="skill-tag">${escapeHTML(l)}</span>`).join("")}</div>
+    </div>` : "";
+
+  view.innerHTML = `
+    <div class="profile-hero">
+      <div style="max-width:1180px;margin:0 auto;">
+        <button class="profile-back" onclick="router.go('team')"><i class="fa-solid fa-arrow-left"></i> Back to Team</button>
+        <div class="profile-hero-grid">
+          <div class="profile-portrait-wrap">
+            <img src="${escapeHTML(p.img)}" alt="${escapeHTML(p.name)}" class="profile-portrait" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+            <div class="profile-fallback">${escapeHTML(p.initials)}</div>
+          </div>
+          <div class="profile-id">
+            <h1>${escapeHTML(p.name)}</h1>
+            <div class="p-role">${escapeHTML(p.role)}</div>
+            <p class="p-tagline">${escapeHTML(p.tagline)}</p>
+          </div>
+        </div>
+      </div>
+      <div class="quick-info">${quickInfo}</div>
+    </div>
+
+    <div class="profile-body">
+      <div class="profile-main">
+        <div class="p-section">
+          <h2><i class="fa-solid fa-user"></i> About</h2>
+          <p class="bio-text">${escapeHTML(p.bio)}</p>
+        </div>
+
+        ${expList ? `<div class="p-section">
+          <h2><i class="fa-solid fa-briefcase"></i> Professional Journey</h2>
+          <ul class="timeline">${expList}</ul>
+        </div>` : ""}
+
+        ${eduList ? `<div class="p-section">
+          <h2><i class="fa-solid fa-graduation-cap"></i> Education</h2>
+          ${eduList}
+        </div>` : ""}
+
+        ${trainingList ? `<div class="p-section">
+          <h2><i class="fa-solid fa-chalkboard-user"></i> Training & Practical Development</h2>
+          ${trainingList}
+        </div>` : ""}
+
+        ${certList ? `<div class="p-section">
+          <h2><i class="fa-solid fa-certificate"></i> Licenses & Certifications</h2>
+          ${certList}
+        </div>` : ""}
+      </div>
+
+      <div class="profile-side">
+        <div class="sidebar-block">
+          <h3>Contact</h3>
+          <div class="contact-actions">${contactActions}</div>
+        </div>
+
+        <div class="sidebar-block">
+          <h3>Professional Expertise</h3>
+          <div class="expertise-tag-list">${expertiseTags}</div>
+        </div>
+
+        <div class="sidebar-block">
+          <h3>Core Arsenal</h3>
+          <div class="skill-groups">${skillGroups}</div>
+        </div>
+
+        ${languagesBlock}
+      </div>
+    </div>
+  `;
+  window.scrollTo(0,0);
+}
+
+/* =========================================================
+   ROUTER (hash-based SPA routing, GitHub Pages friendly)
+========================================================= */
+const router = {
+  go(route){
+    window.location.hash = "#" + route;
+  },
+  render(){
+    const raw = window.location.hash.replace(/^#/, "") || "home";
+    const homeSections = ["home","about","expertise","team","contact"];
+    const mainContent = document.getElementById("page-content");
+    const profileView = document.getElementById("profile-view");
+    const adminView = document.getElementById("admin-view");
+    const footer = document.getElementById("siteFooter");
+
+    if(raw.startsWith("profile/")){
+      const slug = raw.replace("profile/","");
+      mainContent.style.display = "none";
+      adminView.style.display = "none";
+      profileView.style.display = "block";
+      footer.style.display = "block";
+      renderProfile(slug);
+      return;
+    }
+
+    if(raw === "queries"){
+      // queries view is only reachable via unlockQueries(); if hash is entered
+      // manually without auth, send home.
+      if(!queriesUnlocked){
+        router.go("home");
+        return;
+      }
+      mainContent.style.display = "none";
+      profileView.style.display = "none";
+      adminView.style.display = "block";
+      footer.style.display = "none";
+      renderAdmin();
+      return;
+    }
+
+    // default/home-anchor sections
+    mainContent.style.display = "block";
+    profileView.style.display = "none";
+    adminView.style.display = "none";
+    footer.style.display = "block";
+
+    if(homeSections.includes(raw)){
+      const el = document.getElementById(raw);
+      if(el) setTimeout(()=>el.scrollIntoView({behavior:"smooth"}), 30);
+    } else {
+      window.scrollTo(0,0);
+    }
+  }
+};
+window.addEventListener("hashchange", router.render);
+
+/* =========================================================
+   SCROLL REVEAL (IntersectionObserver)
+========================================================= */
+let revealObserver;
+function observeReveals(){
+  if(!revealObserver){
+    revealObserver = new IntersectionObserver((entries)=>{
+      entries.forEach(entry => { if(entry.isIntersecting) entry.target.classList.add("active"); });
+    }, { threshold:.15, rootMargin:"0px 0px -50px 0px" });
+  }
+  document.querySelectorAll(".reveal-up:not(.active), .reveal-left:not(.active), .reveal-right:not(.active), .reveal-scale:not(.active)")
+    .forEach(el => revealObserver.observe(el));
+}
+
+/* =========================================================
+   TOASTS
+========================================================= */
+function showToast(type, title, msg, timeout=5000){
+  const container = document.getElementById("toast-container");
+  const icon = type === "success" ? "fa-circle-check" : type === "error" ? "fa-circle-xmark" : "fa-bolt";
+  const el = document.createElement("div");
+  el.className = "toast " + type;
+  el.innerHTML = `
+    <i class="fa-solid ${icon} t-icon"></i>
+    <div>
+      <div class="t-title">${escapeHTML(title)}</div>
+      <div class="t-msg">${escapeHTML(msg)}</div>
+    </div>
+    <button class="t-close" aria-label="Dismiss"><i class="fa-solid fa-xmark"></i></button>
+  `;
+  el.querySelector(".t-close").onclick = () => el.remove();
+  container.appendChild(el);
+  if(timeout) setTimeout(()=> el.remove(), timeout);
+}
+
+/* =========================================================
+   CONTACT FORM
+========================================================= */
+document.getElementById("contactForm").addEventListener("submit", function(e){
+  e.preventDefault();
+  const fields = {
+    qName: { val: document.getElementById("qName").value.trim(), test: v => v.length > 1 },
+    qEmail: { val: document.getElementById("qEmail").value.trim(), test: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) },
+    qPhone: { val: document.getElementById("qPhone").value.trim(), test: v => /^[+\d][\d\s-]{6,}$/.test(v) },
+    qSubject: { val: document.getElementById("qSubject").value.trim(), test: v => v.length > 1 },
+    qMessage: { val: document.getElementById("qMessage").value.trim(), test: v => v.length > 4 }
+  };
+
+  let valid = true;
+  Object.entries(fields).forEach(([id, f]) => {
+    const input = document.getElementById(id);
+    const err = document.getElementById("err-" + id);
+    const ok = f.test(f.val);
+    input.classList.toggle("invalid", !ok);
+    err.classList.toggle("show", !ok);
+    if(!ok) valid = false;
+  });
+
+  if(!valid){
+    showToast("error", "Check Your Details", "Please fix the highlighted fields before transmitting.");
+    return;
+  }
+
+  const queryData = {
+    id: "q_" + Date.now() + "_" + Math.random().toString(36).slice(2,8),
+    date: new Date().toISOString(),
+    name: fields.qName.val,
+    email: fields.qEmail.val,
+    phone: fields.qPhone.val,
+    subject: fields.qSubject.val,
+    msg: fields.qMessage.val,
+    status: "new"
+  };
+
+  const btn = document.getElementById("submitBtn");
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Transmitting...';
+
+  submitQueryToBackend(queryData).then(() => {
+    showToast("success", "Briefing Received", "Your request has been securely transmitted. We will review it and respond through the contact details provided.");
+    this.reset();
+    document.querySelectorAll(".form-control.invalid").forEach(el => el.classList.remove("invalid"));
+    document.querySelectorAll(".field-error.show").forEach(el => el.classList.remove("show"));
+  }).catch(() => {
+    showToast("error", "Transmission Failed", "We couldn't save your briefing. Please try again in a moment.");
+  }).finally(() => {
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Transmit Secure Briefing';
+  });
+});
+
+/* =========================================================
+   QUERY STORAGE / BACKEND ARCHITECTURE
+   -----------------------------------------------------------
+   GitHub Pages is static hosting: localStorage keeps each
+   visitor's submissions in THEIR OWN browser only — it is a
+   demo/development fallback, not a shared database. To collect
+   real client submissions, set BACKEND_CONFIG.enabled = true and
+   point `endpoint` at your own backend (see README).
+========================================================= */
+const BACKEND_CONFIG = {
+  enabled: false,
+  endpoint: "", // e.g. "https://your-backend.example.com/api/queries"
+  method: "POST"
+};
+const STORAGE_KEY = "dm_adminQueries";
+
+function submitQueryToBackend(queryData){
+  if(BACKEND_CONFIG.enabled && BACKEND_CONFIG.endpoint){
+    return fetch(BACKEND_CONFIG.endpoint, {
+      method: BACKEND_CONFIG.method,
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(queryData)
+    }).then(res => { if(!res.ok) throw new Error("Backend rejected submission"); return res; });
+  }
+  // local/demo fallback
+  return new Promise((resolve, reject) => {
+    try{
+      const all = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+      all.push(queryData);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(all));
+      resolve();
+    }catch(err){ reject(err); }
+  });
+}
+function getAllQueries(){
+  try{ return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
+  catch(e){ return []; }
+}
+function saveAllQueries(list){
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+}
+
+/* =========================================================
+   SECURITY GATE (custom UI — no prompt())
+   NOTE: this is a convenience UI gate only. A password embedded
+   in client-side JavaScript on a public GitHub Pages site is not
+   genuine secure authentication — see README.
+========================================================= */
+const GATE_PASSWORD = "SDEVIL";
+let queriesUnlocked = false;
+
+function openGate(){
+  document.getElementById("sidebar").classList.remove("active");
+  document.getElementById("sidebarOverlay").classList.remove("active");
+  document.getElementById("hamburgerBtn").classList.remove("active");
+  setTimeout(() => {
+    document.getElementById("gateOverlay").classList.add("active");
+    document.getElementById("gatePwd").value = "";
+    document.getElementById("gateError").textContent = "";
+    document.getElementById("gatePwd").focus();
+  }, 350);
+}
+function closeGate(){
+  document.getElementById("gateOverlay").classList.remove("active");
+}
+function togglePwd(){
+  const inp = document.getElementById("gatePwd");
+  const icon = document.getElementById("pwdEyeIcon");
+  const show = inp.type === "password";
+  inp.type = show ? "text" : "password";
+  icon.className = show ? "fa-solid fa-eye-slash" : "fa-solid fa-eye";
+}
+function attemptUnlock(){
+  const pwd = document.getElementById("gatePwd").value;
+  const errEl = document.getElementById("gateError");
+  if(pwd === GATE_PASSWORD){
+    queriesUnlocked = true;
+    closeGate();
+    showToast("success", "Clearance Accepted", "Welcome to the Secure Queries dashboard.");
+    router.go("queries");
+  } else {
+    errEl.textContent = "Access denied. Incorrect clearance code.";
+    errEl.classList.remove("shake"); void errEl.offsetWidth; errEl.classList.add("shake");
+  }
+}
+document.getElementById("gatePwd").addEventListener("keydown", e => { if(e.key === "Enter") attemptUnlock(); });
+document.getElementById("gateOverlay").addEventListener("click", e => { if(e.target.id === "gateOverlay") closeGate(); });
+
+function lockQueries(){
+  queriesUnlocked = false;
+  router.go("home");
+}
+
+/* =========================================================
+   ADMIN DASHBOARD
+========================================================= */
+let currentFilter = "all";
+let currentSearch = "";
+
+document.getElementById("qSearch").addEventListener("input", e => {
+  currentSearch = e.target.value.toLowerCase();
+  renderAdmin();
+});
+document.getElementById("filterGroup").addEventListener("click", e => {
+  const btn = e.target.closest(".filter-chip");
+  if(!btn) return;
+  document.querySelectorAll(".filter-chip").forEach(c => c.classList.remove("active"));
+  btn.classList.add("active");
+  currentFilter = btn.dataset.filter;
+  renderAdmin();
+});
+
+function renderAdmin(){
+  const all = getAllQueries();
+  const today = new Date().toDateString();
+
+  document.getElementById("statTotal").textContent = all.length;
+  document.getElementById("statNew").textContent = all.filter(q=>q.status==="new").length;
+  document.getElementById("statToday").textContent = all.filter(q=> new Date(q.date).toDateString() === today).length;
+  document.getElementById("statReplied").textContent = all.filter(q=>q.status==="replied").length;
+
+  let filtered = all.filter(q => currentFilter === "all" || q.status === currentFilter);
+  if(currentSearch){
+    filtered = filtered.filter(q =>
+      [q.name,q.email,q.phone,q.subject,q.msg].some(v => (v||"").toLowerCase().includes(currentSearch))
+    );
+  }
+  filtered = filtered.slice().reverse();
+
+  const tbody = document.getElementById("queriesTableBody");
+  if(filtered.length === 0){
+    tbody.innerHTML = `<tr><td colspan="6" style="padding:0;border:none;">
+      <div class="empty-state">
+        <i class="fa-solid fa-lock"></i>
+        <h3>No Secure Briefings Yet</h3>
+        <p>Incoming contact requests will appear here.</p>
+      </div>
+    </td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = filtered.map(q => `
+    <tr onclick="openDrawer('${q.id}')">
+      <td data-label="Timestamp" style="color:#94a3b8;font-size:.8rem;">${escapeHTML(new Date(q.date).toLocaleString())}</td>
+      <td data-label="Client"><strong>${escapeHTML(q.name)}</strong></td>
+      <td data-label="Contact">${escapeHTML(q.email)}<br>${escapeHTML(q.phone)}</td>
+      <td data-label="Subject">${escapeHTML(q.subject||"—")}</td>
+      <td data-label="Message" class="msg-preview">${escapeHTML(q.msg)}</td>
+      <td data-label="Status"><span class="status-badge status-${escapeHTML(q.status)}">${escapeHTML(q.status)}</span></td>
+    </tr>`).join("");
+}
+
+/* --- Query detail drawer --- */
+function openDrawer(id){
+  const all = getAllQueries();
+  const q = all.find(x => x.id === id);
+  if(!q) return;
+  if(q.status === "new"){ q.status = "read"; saveAllQueries(all); renderAdmin(); }
+
+  const content = document.getElementById("drawerContent");
+  content.innerHTML = `
+    <span class="status-badge status-${escapeHTML(q.status)}">${escapeHTML(q.status)}</span>
+    <h3>${escapeHTML(q.name)}</h3>
+    <div class="drawer-field"><label>Timestamp</label><p>${escapeHTML(new Date(q.date).toLocaleString())}</p></div>
+    <div class="drawer-field"><label>Email</label><p>${escapeHTML(q.email)}</p></div>
+    <div class="drawer-field"><label>Phone</label><p>${escapeHTML(q.phone)}</p></div>
+    <div class="drawer-field"><label>Subject</label><p>${escapeHTML(q.subject||"—")}</p></div>
+    <div class="drawer-field"><label>Message</label><p>${escapeHTML(q.msg)}</p></div>
+    <div class="drawer-actions">
+      <a href="mailto:${encodeURIComponent(q.email)}"><i class="fa-solid fa-envelope"></i> Email</a>
+      <a href="tel:${escapeHTML((q.phone||'').replace(/\\s+/g,''))}"><i class="fa-solid fa-phone"></i> Call</a>
+      <button onclick="copyToClipboard('${escapeHTML(q.email)}')"><i class="fa-solid fa-copy"></i> Copy Email</button>
+      <button onclick="markStatus('${q.id}','replied')"><i class="fa-solid fa-check-double"></i> Mark Replied</button>
+      <button class="danger" onclick="deleteQuery('${q.id}')"><i class="fa-solid fa-trash"></i> Delete</button>
+    </div>
+  `;
+  document.getElementById("qDrawer").classList.add("active");
+  document.getElementById("drawerOverlay").classList.add("active");
+}
+function closeDrawer(){
+  document.getElementById("qDrawer").classList.remove("active");
+  document.getElementById("drawerOverlay").classList.remove("active");
+}
+function markStatus(id, status){
+  const all = getAllQueries();
+  const q = all.find(x => x.id === id);
+  if(q){ q.status = status; saveAllQueries(all); renderAdmin(); closeDrawer(); showToast("success","Updated",`Marked as ${status}.`); }
+}
+function deleteQuery(id){
+  const all = getAllQueries().filter(x => x.id !== id);
+  saveAllQueries(all);
+  renderAdmin(); closeDrawer();
+  showToast("success","Deleted","The query was removed.");
+}
+function copyToClipboard(text){
+  navigator.clipboard?.writeText(text).then(()=> showToast("success","Copied", text + " copied to clipboard.", 2500));
+}
+function confirmClearAll(){
+  if(getAllQueries().length === 0){ showToast("error","Nothing to Wipe","There are no stored queries."); return; }
+  if(confirm("This will permanently delete all locally stored queries. Continue?")){
+    localStorage.removeItem(STORAGE_KEY);
+    renderAdmin();
+    showToast("success","Database Wiped","All local queries were removed.");
+  }
+}
+function exportCSV(){
+  const all = getAllQueries();
+  if(all.length === 0){ showToast("error","Nothing to Export","There are no stored queries."); return; }
+  const esc = v => `"${String(v||"").replace(/"/g,'""')}"`;
+  const header = ["Date","Name","Email","Phone","Subject","Message","Status"];
+  const rows = all.map(q => [new Date(q.date).toLocaleString(), q.name, q.email, q.phone, q.subject, q.msg, q.status].map(esc).join(","));
+  const csv = [header.join(","), ...rows].join("\\n");
+  const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url; a.download = "deadline-masters-queries.csv";
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+/* =========================================================
+   INIT
+========================================================= */
+renderExpertise();
+renderTeam();
+observeReveals();
+router.render();
+</script>
 </body>
 </html>
