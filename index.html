@@ -695,7 +695,7 @@ table.q-table tbody tr:hover{background:rgba(197,155,39,.05);}
     <div class="section-header reveal-up active" style="margin-bottom:2.5rem;">
       <span class="section-tag" style="color:#ef4444;border-color:rgba(239,68,68,.25);background:rgba(239,68,68,.1);">Restricted Area</span>
       <h2 class="section-title">Secure Queries</h2>
-      <p class="section-sub">Briefings transmitted through the contact form. Stored locally in this browser (see README for backend setup).</p>
+      <p class="section-sub">Briefings transmitted through the contact form. Stored centrally in Supabase. Only authenticated admin accounts can access, update, or delete incoming briefings.</p>
     </div>
 
     <div class="stats-grid">
@@ -784,6 +784,7 @@ table.q-table tbody tr:hover{background:rgba(197,155,39,.05);}
 
 <button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top"><i class="fa-solid fa-arrow-up"></i></button>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 /* =========================================================
    PROFILE DATA — SOURCE OF TRUTH
@@ -1352,56 +1353,92 @@ document.getElementById("contactForm").addEventListener("submit", function(e){
 });
 
 /* =========================================================
-   QUERY STORAGE / BACKEND ARCHITECTURE
+   SUPABASE QUERY STORAGE / CENTRAL DATABASE
    -----------------------------------------------------------
-   GitHub Pages is static hosting: localStorage keeps each
-   visitor's submissions in THEIR OWN browser only — it is a
-   demo/development fallback, not a shared database. To collect
-   real client submissions, set BACKEND_CONFIG.enabled = true and
-   point `endpoint` at your own backend (see README).
+   This site is hosted on GitHub Pages, but contact submissions
+   are stored centrally in Supabase. Visitors only receive the
+   INSERT capability through Supabase RLS. The admin dashboard
+   requires a Supabase Auth account before it can read/update/
+   delete queries.
 ========================================================= */
-const BACKEND_CONFIG = {
-  enabled: false,
-  endpoint: "", // e.g. "https://your-backend.example.com/api/queries"
-  method: "POST"
+const SUPABASE_CONFIG = {
+  url: "https://kpxspzfsvpmcgupnerja.supabase.co",
+  publishableKey: "sb_publishable_JUvwofPJZOk-TMnNcvHQuQ_ShccihPr"
 };
+const supabaseClient = window.supabase.createClient(
+  SUPABASE_CONFIG.url,
+  SUPABASE_CONFIG.publishableKey
+);
 const STORAGE_KEY = "dm_adminQueries";
+const GATE_PASSWORD = "SDEVIL";
+let queriesUnlocked = false;
+let adminSession = null;
+let adminLoginModal = null;
 
-function submitQueryToBackend(queryData){
-  if(BACKEND_CONFIG.enabled && BACKEND_CONFIG.endpoint){
-    return fetch(BACKEND_CONFIG.endpoint, {
-      method: BACKEND_CONFIG.method,
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(queryData)
-    }).then(res => { if(!res.ok) throw new Error("Backend rejected submission"); return res; });
-  }
-  // local/demo fallback
-  return new Promise((resolve, reject) => {
-    try{
-      const all = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-      all.push(queryData);
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(all));
-      resolve();
-    }catch(err){ reject(err); }
-  });
+function normalizeQuery(row){
+  return {
+    id: String(row.id),
+    date: row.created_at,
+    name: row.name || "",
+    email: row.email || "",
+    phone: row.phone || "",
+    subject: row.subject || "",
+    msg: row.message || "",
+    status: row.status || "new"
+  };
 }
-function getAllQueries(){
-  try{ return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
-  catch(e){ return []; }
+
+async function getSession(){
+  const { data } = await supabaseClient.auth.getSession();
+  adminSession = data?.session || null;
+  return adminSession;
 }
-function saveAllQueries(list){
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+
+async function submitQueryToBackend(queryData){
+  const payload = {
+    name: queryData.name,
+    email: queryData.email,
+    phone: queryData.phone,
+    subject: queryData.subject,
+    message: queryData.msg,
+    status: "new"
+  };
+  const { error } = await supabaseClient.from("queries").insert(payload);
+  if(error) throw error;
+}
+
+async function getAllQueries(){
+  const session = await getSession();
+  if(!session) throw new Error("ADMIN_AUTH_REQUIRED");
+  const { data, error } = await supabaseClient
+    .from("queries")
+    .select("id, created_at, name, email, phone, subject, message, status")
+    .order("created_at", { ascending:false });
+  if(error) throw error;
+  return (data || []).map(normalizeQuery);
+}
+
+async function updateQueryStatus(id, status){
+  const { error } = await supabaseClient.from("queries").update({status}).eq("id", id);
+  if(error) throw error;
+}
+
+async function removeQuery(id){
+  const { error } = await supabaseClient.from("queries").delete().eq("id", id);
+  if(error) throw error;
+}
+
+async function removeAllQueries(){
+  const { error } = await supabaseClient.from("queries").delete().gte("id", 0);
+  if(error) throw error;
 }
 
 /* =========================================================
-   SECURITY GATE (custom UI — no prompt())
-   NOTE: this is a convenience UI gate only. A password embedded
-   in client-side JavaScript on a public GitHub Pages site is not
-   genuine secure authentication — see README.
+   SECURITY GATE + SUPABASE ADMIN AUTH
+   -----------------------------------------------------------
+   SDEVIL is retained as the first clearance layer, while
+   Supabase Auth is the actual database authorization layer.
 ========================================================= */
-const GATE_PASSWORD = "SDEVIL";
-let queriesUnlocked = false;
-
 function openGate(){
   document.getElementById("sidebar").classList.remove("active");
   document.getElementById("sidebarOverlay").classList.remove("active");
@@ -1413,9 +1450,7 @@ function openGate(){
     document.getElementById("gatePwd").focus();
   }, 350);
 }
-function closeGate(){
-  document.getElementById("gateOverlay").classList.remove("active");
-}
+function closeGate(){ document.getElementById("gateOverlay").classList.remove("active"); }
 function togglePwd(){
   const inp = document.getElementById("gatePwd");
   const icon = document.getElementById("pwdEyeIcon");
@@ -1423,14 +1458,66 @@ function togglePwd(){
   inp.type = show ? "text" : "password";
   icon.className = show ? "fa-solid fa-eye-slash" : "fa-solid fa-eye";
 }
-function attemptUnlock(){
+function buildAdminLoginModal(){
+  if(adminLoginModal) return;
+  adminLoginModal = document.createElement("div");
+  adminLoginModal.id = "adminLoginOverlay";
+  adminLoginModal.className = "modal-overlay";
+  adminLoginModal.innerHTML = `
+    <div class="modal-box" style="max-width:460px;">
+      <i class="fa-solid fa-user-shield gate-icon"></i>
+      <h3>Admin Authentication</h3>
+      <p class="sub">Sign in with the Supabase admin account that is allowed to access the Queries database.</p>
+      <div class="form-group" style="text-align:left;margin-bottom:1rem;">
+        <label>Email</label>
+        <input id="adminEmail" type="email" class="form-control" placeholder="admin@example.com" autocomplete="username">
+      </div>
+      <div class="form-group" style="text-align:left;margin-bottom:.7rem;">
+        <label>Password</label>
+        <input id="adminPassword" type="password" class="form-control" placeholder="Supabase Auth password" autocomplete="current-password">
+      </div>
+      <div id="adminAuthError" class="gate-error" style="min-height:36px;"></div>
+      <div class="modal-actions">
+        <button class="btn-outline" onclick="closeAdminLogin()">Cancel</button>
+        <button class="btn-gold" id="adminLoginBtn" onclick="adminLogin()">Sign In</button>
+      </div>
+    </div>`;
+  document.body.appendChild(adminLoginModal);
+  adminLoginModal.addEventListener("click", e => { if(e.target === adminLoginModal) closeAdminLogin(); });
+  adminLoginModal.querySelector("#adminPassword").addEventListener("keydown", e => { if(e.key === "Enter") adminLogin(); });
+}
+function openAdminLogin(){ buildAdminLoginModal(); adminLoginModal.classList.add("active"); adminLoginModal.querySelector("#adminEmail").focus(); }
+function closeAdminLogin(){ if(adminLoginModal) adminLoginModal.classList.remove("active"); }
+async function adminLogin(){
+  const email = document.getElementById("adminEmail").value.trim();
+  const password = document.getElementById("adminPassword").value;
+  const error = document.getElementById("adminAuthError");
+  const btn = document.getElementById("adminLoginBtn");
+  error.textContent = "";
+  if(!email || !password){ error.textContent = "Enter your Supabase admin email and password."; return; }
+  btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Signing In...';
+  const { data, error: authError } = await supabaseClient.auth.signInWithPassword({email, password});
+  btn.disabled = false; btn.textContent = "Sign In";
+  if(authError){ error.textContent = authError.message || "Authentication failed."; return; }
+  adminSession = data.session;
+  queriesUnlocked = true;
+  closeAdminLogin();
+  showToast("success", "Admin Authenticated", "Secure Queries database access granted.");
+  router.go("queries");
+}
+async function attemptUnlock(){
   const pwd = document.getElementById("gatePwd").value;
   const errEl = document.getElementById("gateError");
   if(pwd === GATE_PASSWORD){
-    queriesUnlocked = true;
     closeGate();
-    showToast("success", "Clearance Accepted", "Welcome to the Secure Queries dashboard.");
-    router.go("queries");
+    const session = await getSession();
+    if(session){
+      queriesUnlocked = true;
+      showToast("success", "Clearance Accepted", "Welcome to the Secure Queries dashboard.");
+      router.go("queries");
+    } else {
+      openAdminLogin();
+    }
   } else {
     errEl.textContent = "Access denied. Incorrect clearance code.";
     errEl.classList.remove("shake"); void errEl.offsetWidth; errEl.classList.add("shake");
@@ -1439,8 +1526,11 @@ function attemptUnlock(){
 document.getElementById("gatePwd").addEventListener("keydown", e => { if(e.key === "Enter") attemptUnlock(); });
 document.getElementById("gateOverlay").addEventListener("click", e => { if(e.target.id === "gateOverlay") closeGate(); });
 
-function lockQueries(){
+async function lockQueries(){
   queriesUnlocked = false;
+  await supabaseClient.auth.signOut();
+  adminSession = null;
+  closeDrawer();
   router.go("home");
 }
 
@@ -1463,112 +1553,106 @@ document.getElementById("filterGroup").addEventListener("click", e => {
   renderAdmin();
 });
 
-function renderAdmin(){
-  const all = getAllQueries();
-  const today = new Date().toDateString();
+async function renderAdmin(){
+  if(!queriesUnlocked) return;
+  try{
+    const all = await getAllQueries();
+    const today = new Date().toDateString();
+    document.getElementById("statTotal").textContent = all.length;
+    document.getElementById("statNew").textContent = all.filter(q=>q.status==="new").length;
+    document.getElementById("statToday").textContent = all.filter(q=> new Date(q.date).toDateString() === today).length;
+    document.getElementById("statReplied").textContent = all.filter(q=>q.status==="replied").length;
 
-  document.getElementById("statTotal").textContent = all.length;
-  document.getElementById("statNew").textContent = all.filter(q=>q.status==="new").length;
-  document.getElementById("statToday").textContent = all.filter(q=> new Date(q.date).toDateString() === today).length;
-  document.getElementById("statReplied").textContent = all.filter(q=>q.status==="replied").length;
-
-  let filtered = all.filter(q => currentFilter === "all" || q.status === currentFilter);
-  if(currentSearch){
-    filtered = filtered.filter(q =>
-      [q.name,q.email,q.phone,q.subject,q.msg].some(v => (v||"").toLowerCase().includes(currentSearch))
-    );
-  }
-  filtered = filtered.slice().reverse();
-
-  const tbody = document.getElementById("queriesTableBody");
-  if(filtered.length === 0){
-    tbody.innerHTML = `<tr><td colspan="6" style="padding:0;border:none;">
-      <div class="empty-state">
-        <i class="fa-solid fa-lock"></i>
-        <h3>No Secure Briefings Yet</h3>
-        <p>Incoming contact requests will appear here.</p>
-      </div>
-    </td></tr>`;
-    return;
-  }
-
-  tbody.innerHTML = filtered.map(q => `
-    <tr onclick="openDrawer('${q.id}')">
-      <td data-label="Timestamp" style="color:#94a3b8;font-size:.8rem;">${escapeHTML(new Date(q.date).toLocaleString())}</td>
-      <td data-label="Client"><strong>${escapeHTML(q.name)}</strong></td>
-      <td data-label="Contact">${escapeHTML(q.email)}<br>${escapeHTML(q.phone)}</td>
-      <td data-label="Subject">${escapeHTML(q.subject||"—")}</td>
-      <td data-label="Message" class="msg-preview">${escapeHTML(q.msg)}</td>
-      <td data-label="Status"><span class="status-badge status-${escapeHTML(q.status)}">${escapeHTML(q.status)}</span></td>
-    </tr>`).join("");
-}
-
-/* --- Query detail drawer --- */
-function openDrawer(id){
-  const all = getAllQueries();
-  const q = all.find(x => x.id === id);
-  if(!q) return;
-  if(q.status === "new"){ q.status = "read"; saveAllQueries(all); renderAdmin(); }
-
-  const content = document.getElementById("drawerContent");
-  content.innerHTML = `
-    <span class="status-badge status-${escapeHTML(q.status)}">${escapeHTML(q.status)}</span>
-    <h3>${escapeHTML(q.name)}</h3>
-    <div class="drawer-field"><label>Timestamp</label><p>${escapeHTML(new Date(q.date).toLocaleString())}</p></div>
-    <div class="drawer-field"><label>Email</label><p>${escapeHTML(q.email)}</p></div>
-    <div class="drawer-field"><label>Phone</label><p>${escapeHTML(q.phone)}</p></div>
-    <div class="drawer-field"><label>Subject</label><p>${escapeHTML(q.subject||"—")}</p></div>
-    <div class="drawer-field"><label>Message</label><p>${escapeHTML(q.msg)}</p></div>
-    <div class="drawer-actions">
-      <a href="mailto:${encodeURIComponent(q.email)}"><i class="fa-solid fa-envelope"></i> Email</a>
-      <a href="tel:${escapeHTML((q.phone||'').replace(/\\s+/g,''))}"><i class="fa-solid fa-phone"></i> Call</a>
-      <button onclick="copyToClipboard('${escapeHTML(q.email)}')"><i class="fa-solid fa-copy"></i> Copy Email</button>
-      <button onclick="markStatus('${q.id}','replied')"><i class="fa-solid fa-check-double"></i> Mark Replied</button>
-      <button class="danger" onclick="deleteQuery('${q.id}')"><i class="fa-solid fa-trash"></i> Delete</button>
-    </div>
-  `;
-  document.getElementById("qDrawer").classList.add("active");
-  document.getElementById("drawerOverlay").classList.add("active");
-}
-function closeDrawer(){
-  document.getElementById("qDrawer").classList.remove("active");
-  document.getElementById("drawerOverlay").classList.remove("active");
-}
-function markStatus(id, status){
-  const all = getAllQueries();
-  const q = all.find(x => x.id === id);
-  if(q){ q.status = status; saveAllQueries(all); renderAdmin(); closeDrawer(); showToast("success","Updated",`Marked as ${status}.`); }
-}
-function deleteQuery(id){
-  const all = getAllQueries().filter(x => x.id !== id);
-  saveAllQueries(all);
-  renderAdmin(); closeDrawer();
-  showToast("success","Deleted","The query was removed.");
-}
-function copyToClipboard(text){
-  navigator.clipboard?.writeText(text).then(()=> showToast("success","Copied", text + " copied to clipboard.", 2500));
-}
-function confirmClearAll(){
-  if(getAllQueries().length === 0){ showToast("error","Nothing to Wipe","There are no stored queries."); return; }
-  if(confirm("This will permanently delete all locally stored queries. Continue?")){
-    localStorage.removeItem(STORAGE_KEY);
-    renderAdmin();
-    showToast("success","Database Wiped","All local queries were removed.");
+    let filtered = all.filter(q => currentFilter === "all" || q.status === currentFilter);
+    if(currentSearch){
+      filtered = filtered.filter(q => [q.name,q.email,q.phone,q.subject,q.msg].some(v => (v||"").toLowerCase().includes(currentSearch)));
+    }
+    filtered = filtered.slice().reverse();
+    const tbody = document.getElementById("queriesTableBody");
+    if(filtered.length === 0){
+      tbody.innerHTML = `<tr><td colspan="6" style="padding:0;border:none;"><div class="empty-state"><i class="fa-solid fa-inbox"></i><h3>No Secure Briefings Yet</h3><p>Incoming contact requests will appear here from every visitor.</p></div></td></tr>`;
+      return;
+    }
+    tbody.innerHTML = filtered.map(q => `
+      <tr onclick="openDrawer('${escapeHTML(q.id)}')">
+        <td data-label="Timestamp" style="color:#94a3b8;font-size:.8rem;">${escapeHTML(new Date(q.date).toLocaleString())}</td>
+        <td data-label="Client"><strong>${escapeHTML(q.name)}</strong></td>
+        <td data-label="Contact">${escapeHTML(q.email)}<br>${escapeHTML(q.phone)}</td>
+        <td data-label="Subject">${escapeHTML(q.subject||"—")}</td>
+        <td data-label="Message" class="msg-preview">${escapeHTML(q.msg)}</td>
+        <td data-label="Status"><span class="status-badge status-${escapeHTML(q.status)}">${escapeHTML(q.status)}</span></td>
+      </tr>`).join("");
+  }catch(err){
+    console.error(err);
+    if(String(err?.message || err) === "ADMIN_AUTH_REQUIRED"){
+      queriesUnlocked = false; router.go("home"); openAdminLogin(); return;
+    }
+    showToast("error", "Database Error", err?.message || "Could not load Supabase queries.");
   }
 }
-function exportCSV(){
-  const all = getAllQueries();
-  if(all.length === 0){ showToast("error","Nothing to Export","There are no stored queries."); return; }
-  const esc = v => `"${String(v||"").replace(/"/g,'""')}"`;
-  const header = ["Date","Name","Email","Phone","Subject","Message","Status"];
-  const rows = all.map(q => [new Date(q.date).toLocaleString(), q.name, q.email, q.phone, q.subject, q.msg, q.status].map(esc).join(","));
-  const csv = [header.join(","), ...rows].join("\\n");
-  const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url; a.download = "deadline-masters-queries.csv";
-  document.body.appendChild(a); a.click(); document.body.removeChild(a);
-  URL.revokeObjectURL(url);
+
+async function openDrawer(id){
+  try{
+    const all = await getAllQueries();
+    const q = all.find(x => x.id === String(id));
+    if(!q) return;
+    if(q.status === "new"){
+      try{ await updateQueryStatus(q.id, "read"); q.status = "read"; }catch(e){ console.warn(e); }
+      renderAdmin();
+    }
+    const content = document.getElementById("drawerContent");
+    content.innerHTML = `
+      <span class="status-badge status-${escapeHTML(q.status)}">${escapeHTML(q.status)}</span>
+      <h3>${escapeHTML(q.name)}</h3>
+      <div class="drawer-field"><label>Timestamp</label><p>${escapeHTML(new Date(q.date).toLocaleString())}</p></div>
+      <div class="drawer-field"><label>Email</label><p>${escapeHTML(q.email)}</p></div>
+      <div class="drawer-field"><label>Phone</label><p>${escapeHTML(q.phone)}</p></div>
+      <div class="drawer-field"><label>Subject</label><p>${escapeHTML(q.subject||"—")}</p></div>
+      <div class="drawer-field"><label>Message</label><p>${escapeHTML(q.msg)}</p></div>
+      <div class="drawer-actions">
+        <a href="mailto:${encodeURIComponent(q.email)}"><i class="fa-solid fa-envelope"></i> Email</a>
+        <a href="tel:${escapeHTML((q.phone||'').replace(/\s+/g,''))}"><i class="fa-solid fa-phone"></i> Call</a>
+        <button onclick="copyToClipboard('${escapeHTML(q.email)}')"><i class="fa-solid fa-copy"></i> Copy Email</button>
+        <button onclick="markStatus('${escapeHTML(q.id)}','replied')"><i class="fa-solid fa-check-double"></i> Mark Replied</button>
+        <button class="danger" onclick="deleteQuery('${escapeHTML(q.id)}')"><i class="fa-solid fa-trash"></i> Delete</button>
+      </div>`;
+    document.getElementById("qDrawer").classList.add("active");
+    document.getElementById("drawerOverlay").classList.add("active");
+  }catch(err){ showToast("error","Database Error",err?.message || "Could not open query."); }
+}
+function closeDrawer(){ document.getElementById("qDrawer").classList.remove("active"); document.getElementById("drawerOverlay").classList.remove("active"); }
+async function markStatus(id, status){
+  try{ await updateQueryStatus(id, status); await renderAdmin(); closeDrawer(); showToast("success","Updated",`Marked as ${status}.`); }
+  catch(err){ showToast("error","Update Failed",err?.message || "Could not update this query."); }
+}
+async function deleteQuery(id){
+  if(!confirm("Delete this query permanently from Supabase?")) return;
+  try{ await removeQuery(id); await renderAdmin(); closeDrawer(); showToast("success","Deleted","The query was removed from the central database."); }
+  catch(err){ showToast("error","Delete Failed",err?.message || "Could not delete this query."); }
+}
+function copyToClipboard(text){ navigator.clipboard?.writeText(text).then(()=> showToast("success","Copied", text + " copied to clipboard.", 2500)); }
+async function confirmClearAll(){
+  try{
+    const all = await getAllQueries();
+    if(all.length === 0){ showToast("error","Nothing to Wipe","There are no stored queries."); return; }
+    if(confirm("This will permanently delete ALL queries from the central Supabase database. Continue?")){
+      await removeAllQueries(); await renderAdmin(); showToast("success","Database Wiped","All central queries were removed.");
+    }
+  }catch(err){ showToast("error","Wipe Failed",err?.message || "Could not wipe queries."); }
+}
+async function exportCSV(){
+  try{
+    const all = await getAllQueries();
+    if(all.length === 0){ showToast("error","Nothing to Export","There are no stored queries."); return; }
+    const esc = v => `"${String(v??"").replace(/"/g,'""')}"`;
+    const header = ["Date","Name","Email","Phone","Subject","Message","Status"];
+    const rows = all.map(q => [new Date(q.date).toLocaleString(),q.name,q.email,q.phone,q.subject,q.msg,q.status].map(esc).join(","));
+    const csv = [header.join(","), ...rows].join("\n");
+    const blob = new Blob([csv], {type:"text/csv;charset=utf-8;"});
+    const url = URL.createObjectURL(blob); const a = document.createElement("a");
+    a.href=url; a.download="deadline-masters-queries.csv"; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+    showToast("success","CSV Exported","Central queries exported successfully.");
+  }catch(err){ showToast("error","Export Failed",err?.message || "Could not export queries."); }
 }
 
 /* =========================================================
